@@ -1,6 +1,5 @@
 # ITSE 1430 - Programming in C#
 
-Test 
 This repository is where your classwork and lab assignments will go.
 
 ## Prerequisites
