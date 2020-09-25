@@ -36,7 +36,6 @@ namespace budget
                 Console.WriteLine("D) Make a deposit");
                 Console.WriteLine("E) Add an expense");
                 Console.WriteLine("Q) Quit\n");
-
                 var option = Console.ReadLine();
 
                 switch (option)
@@ -211,6 +210,7 @@ namespace budget
                             Console.WriteLine($"You do realize there is no {namedMonth} {day} in {year}, correct?");
                         }
                     }
+
                     default: YesOrNo(); break;
                 }
             }
@@ -225,7 +225,7 @@ namespace budget
             {
                 var checking = GetNumber();
 
-                if (!(checking >= min && checking <= max))
+                if (checking <= min || checking >= max)
                     Console.WriteLine($"\nThat isn't a valid {date}, moron.");
 
                 else
@@ -279,7 +279,7 @@ namespace budget
         static string GetNote()
         {
             Console.WriteLine("\nWould you like to add a note? (y/n)");
-            do
+            while (true)
             {
                 var choice = Console.ReadLine();
 
@@ -302,7 +302,7 @@ namespace budget
 
                     default: YesOrNo(); break;
                 }
-            } while (true);
+            }
         }
 
         static void ShowBalance(decimal amount)
