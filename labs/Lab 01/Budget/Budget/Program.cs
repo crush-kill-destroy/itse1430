@@ -18,7 +18,7 @@ namespace budget
         static string accountNumber;
         static decimal balance;
 
-        static void Main ()
+        static void Main()
         {
             Console.WriteLine("Welcome to Traywick LCC Bank of Neutropia.");
             Console.WriteLine("We need some basic information before we let you get into our super secure twelve layer nacho encryption.");
@@ -29,7 +29,7 @@ namespace budget
             Console.WriteLine("\nOh. Good. Almost done. Just need help remembering how much money was in your account.");
             balance = GetMoney();
 
-            bool menu = true;
+            var menu = true;
             do
             {
                 Console.WriteLine($"\n{name}\t  Account: {accountNumber}\t  Balance: {balance:C}\n");
@@ -37,14 +37,14 @@ namespace budget
                 Console.WriteLine("E) Add an expense");
                 Console.WriteLine("Q) Quit\n");
 
-                string option = Console.ReadLine();
+                var option = Console.ReadLine();
 
                 switch (option)
                 {
                     case "d":
                     case "D":
                     {
-                        Mistake("deposit");
+                        CheckForMistake("deposit");
                         var deposit = GetNumber();
 
                         if (deposit == 0)
@@ -105,7 +105,7 @@ namespace budget
 
 
 
-        static string GetName ()
+        static string GetName()
         {
             while (true)
             {
@@ -118,7 +118,7 @@ namespace budget
             }
         }
 
-        static long GetNumber ()
+        static long GetNumber()
         {
             while (true)
             {
@@ -136,7 +136,7 @@ namespace budget
             }
         }
 
-        static decimal GetMoney ()
+        static decimal GetMoney()
         {
             while (true)
             {
@@ -156,11 +156,11 @@ namespace budget
             }
         }
 
-        static decimal AddExpense ()
+        static decimal AddExpense()
         {
             while (true)
             {
-                Mistake("expense");
+                CheckForMistake("expense");
                 var number = GetMoney();
 
                 if ((balance - number) < 0)
@@ -175,13 +175,13 @@ namespace budget
         }
 
 
-        static string GetDate ()
+        static string GetDate()
         {
             Console.WriteLine("Would you like to enter this in as today's date? (y/n)");
 
             while (true)
             {
-                string yesNo = Console.ReadLine();
+                var yesNo = Console.ReadLine();
 
                 switch (yesNo)
                 {
@@ -191,9 +191,9 @@ namespace budget
                     case "n":
                     case "N":
                     {
-                        int month;
-                        int day;
-                        int year;
+                        var month;
+                        var day;
+                        var year;
 
                         while (true)
                         {
@@ -276,7 +276,7 @@ namespace budget
             }
         }
 
-        static string GetNote ()
+        static string GetNote()
         {
             Console.WriteLine("\nWould you like to add a note? (y/n)");
             do
@@ -296,7 +296,7 @@ namespace budget
                     case "Y":
                     {
                         Console.WriteLine("\nFine. Give us more stuff to store.");
-                        string note = Console.ReadLine();
+                        var note = Console.ReadLine();
                         return note;
                     }
 
@@ -330,7 +330,7 @@ namespace budget
             Console.WriteLine("This is a place of positivity. We do not accept negative numbers here.");
         }
 
-        static void Mistake(string option)
+        static void CheckForMistake(string option)
         {
             Console.WriteLine($"You picked {option}. If you didn't mean to pick this, just enter 0. Otherwise, give us the amount.");
         }
