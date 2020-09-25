@@ -53,6 +53,7 @@ namespace budget
                         balance += deposit;
                         var date = GetDate();
                         var note = GetNote();
+
                         DisplayAdjustment(deposit, date, note);
                         ShowBalance(balance);
                         break;
@@ -129,7 +130,9 @@ namespace budget
                 {
                     NegativeNumber();
                     continue;
-                } else if (success)
+                }
+                
+                else if (success)
                     return attempt;
 
                 LookingForNumber();
@@ -191,9 +194,9 @@ namespace budget
                     case "n":
                     case "N":
                     {
-                        var month;
-                        var day;
-                        var year;
+                        int month;
+                        int day;
+                        int year;
 
                         while (true)
                         {
@@ -207,13 +210,10 @@ namespace budget
                             var namedMonth = ConvertToMonth(month);
                             Console.WriteLine($"You do realize there is no {namedMonth} {day} in {year}, correct?");
                         }
-
                     }
-
                     default: YesOrNo(); break;
                 }
             }
-
         }
 
 
@@ -272,7 +272,7 @@ namespace budget
                 case 10: return "October";
                 case 11: return "November";
                 case 12: return "December";
-                default: return "MONTH";
+                default: return "If you're seeing this message, you're getting exactly what you deserve trusting all of your money with a bank whose app is a 1980s DOS window.";
             }
         }
 
@@ -302,9 +302,9 @@ namespace budget
 
                     default: YesOrNo(); break;
                 }
-
             } while (true);
         }
+
         static void ShowBalance(decimal amount)
         {
             Console.WriteLine($"\nYour new balance is {amount:C}");
