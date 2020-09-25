@@ -28,8 +28,8 @@ namespace budget
             accountNumber = GetNumber().ToString();
             Console.WriteLine("\nOh. Good. Almost done. Just need help remembering how much money was in your account.");
             balance = GetMoney();
-
             var menu = true;
+
             do
             {
                 Console.WriteLine($"\n{name}\t  Account: {accountNumber}\t  Balance: {balance:C}\n");
@@ -65,26 +65,22 @@ namespace budget
                         {
                             var expense = AddExpense();
 
+                            if (expense == 0)
+                                break;
+
                             if (expense > balance)
                             {
                                 Console.WriteLine("You don't have the $$$ for that.");
                                 continue;
                             }
 
-                            if (expense == 0)
-                                break;
+                            balance -= expense;
+                            var date = GetDate();
+                            var note = GetNote();
 
-                            else
-                            {
-                                balance -= expense;
-                                var date = GetDate();
-                                var note = GetNote();
-
-                                DisplayAdjustment(-expense, date, note);
-                                ShowBalance(balance);
-
-                                break;
-                            }
+                            DisplayAdjustment(-expense, date, note);
+                            ShowBalance(balance);
+                            break;
                         }
                     }
                     break;
@@ -123,7 +119,7 @@ namespace budget
             while (true)
             {
                 var value = Console.ReadLine();
-                var success = Int64.TryParse(value, out long attempt);
+                var success = Int64.TryParse(value, out var attempt);
 
                 if (success == true && attempt < 0)
                 {
@@ -193,15 +189,11 @@ namespace budget
                     case "n":
                     case "N":
                     {
-                        int month;
-                        int day;
-                        int year;
-
                         while (true)
                         {
-                            month = GetWithinRange("month", 1, 12);
-                            day = GetWithinRange("day", 1, 31);
-                            year = GetWithinRange("year", 1897, 2020);
+                            var month = GetWithinRange("month", 1, 12);
+                            var day = GetWithinRange("day", 1, 31);
+                            var year = GetWithinRange("year", 1897, 2020);
 
                             if (CheckDate(day, month, year) == true)
                                 return $"{month}\\{day}\\{year}";
@@ -244,13 +236,13 @@ namespace budget
             if (betweenJanJuly == true && month % 2 == 0 && day == 31)
                 return false;
 
-            else if (betweenJanJuly == false && month %2 == 1)
+            if (betweenJanJuly == false && month %2 == 1)
                 return false;
 
-            else if (month == 2 && day > 29)
+            if (month == 2 && day > 29)
                 return false;
 
-            else if (leapYear == false && month == 2 && day == 29)
+            if (leapYear == false && month == 2 && day == 29)
                 return false;
 
             return true;
