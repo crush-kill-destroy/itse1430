@@ -89,14 +89,14 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Items.AddRange(new object[] {
             "Compiler Error",
-            "Anthropomorphic Dishwasher",
+            "Anthropomorphic Washing Machine",
             "Floating Orb of Eyes",
             "Mass Hallucination",
             "Killer Clown",
             "Something...Else?"});
             this.comboBox2.Location = new System.Drawing.Point(242, 281);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(182, 33);
+            this.comboBox2.Size = new System.Drawing.Size(371, 33);
             this.comboBox2.TabIndex = 2;
             // 
             // label1
