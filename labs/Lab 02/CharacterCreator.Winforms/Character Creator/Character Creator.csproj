@@ -3,11 +3,8 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RootNamespace>Character_Creator</RootNamespace>
     <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CharacterCreator\CharacterCreator.csproj" />
-  </ItemGroup>
 
 </Project>
