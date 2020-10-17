@@ -6,7 +6,7 @@
 
 using System;
 
-namespace CharacterCreator
+namespace Character_Creator
 {
     public class Character
     {
@@ -17,7 +17,7 @@ namespace CharacterCreator
         public int Brains { get; set; }
         public int Moxie { get; set; }
         public int Luck { get; set; }
-        public int Wealth { get; set; }
+        public int Sanity { get; set; }
         private string _description;
         private string _profession;
         private string _race;
@@ -58,10 +58,11 @@ namespace CharacterCreator
                 return "Name is required!";
             if (Name.Length > MaxNameLength)
                 return "Name is too long!";
+
             if (Description.Length > MaxDescriptionLength)
                 return "Description is too long!";
             var statCheck = ValidateStat(Brawn) ?? ValidateStat(Brains, -2000000) ?? ValidateStat(Moxie)
-                ?? ValidateStat(Luck) ?? ValidateStat(Wealth);
+                ?? ValidateStat(Luck) ?? ValidateStat(Sanity);
             if (statCheck != null)
                 return statCheck;
             if (String.IsNullOrEmpty(Profession))

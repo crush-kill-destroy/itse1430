@@ -14,10 +14,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CharacterCreator.Winforms
+
+namespace Character_Creator.Winforms
 {
     public partial class MainForm : Form
     {
+        private Character _character;
+
         public MainForm ()
         {
             InitializeComponent();
@@ -26,10 +29,11 @@ namespace CharacterCreator.Winforms
             _miCharacter.Click +=OnNew;
         }
 
-        
-        private void OnNew(object sender, EventArgs e)
+        private void OnNew ( object sender, EventArgs e)
         {
-            var result = Character_Creator.ShowDialog(this);
+
+            _character = new Character();
+            _character.ShowDialog(this);
         }
 
         private void OnExit(object sender, EventArgs e)
@@ -50,15 +54,15 @@ namespace CharacterCreator.Winforms
                 return;
 
             var character = new Character();
-            character.Name = _txtName.Text;
+            character.Name = _labName.Text;
             character.Description = _richDescription.Text;
-            character.Brawn = character.ConvertStat(_txtBrawn.Text);
-            character.Brains = character.ConvertStat(_txtBrains.Text);
-            character.Moxie = character.ConvertStat(_txtMoxie.Text);
-            character.Luck = character.ConvertStat(_txtLuck.Text);
-            character.Wealth = character.ConvertStat(_txtWealth.Text);
-            character.Profession = _comboProf.Text;
-            character.Race = _comboRace.Text;
+            character.Brawn = character.ConvertStat(_labBrawn.Text);
+            character.Brains = character.ConvertStat(_labBrains.Text);
+            character.Moxie = character.ConvertStat(_labMoxie.Text);
+            character.Luck = character.ConvertStat(_labLuck.Text);
+            character.Sanity = character.ConvertStat(_labSanity.Text);
+            character.Profession = _labProfession.Text;
+            character.Race = _labRace.Text;
 
             var valid = character.Validate();
             if (valid != null)
@@ -86,6 +90,16 @@ namespace CharacterCreator.Winforms
         }
 
         private void _txtBrains_TextChanged ( object sender, EventArgs e )
+        {
+
+        }
+
+        private void _txtDesc_Click ( object sender, EventArgs e )
+        {
+
+        }
+
+        private void lsdklf_Click ( object sender, EventArgs e )
         {
 
         }

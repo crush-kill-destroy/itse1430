@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Character_Creator
+namespace Character_Creator.Winforms
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace Character_Creator
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Character_Creator());
         }
     }
 }
