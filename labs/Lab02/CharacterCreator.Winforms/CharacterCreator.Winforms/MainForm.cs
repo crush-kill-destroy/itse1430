@@ -12,7 +12,7 @@ namespace CharacterCreator.Winforms
 {
     public partial class MainForm : Form
     {
-        /// <description> This is the main form that gets you to every other piece of the program to help you store your characters for your RPG. </description>
+        /// <summary> The starting form that connects everything. </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -26,6 +26,9 @@ namespace CharacterCreator.Winforms
 
         private void OnEdit(object sender, EventArgs e)
         {
+            if (_character == null)
+                return;
+
             if (!String.IsNullOrEmpty(_character.Name))
             {
                 var form = new FormCreateCharacter(_character);
@@ -33,6 +36,14 @@ namespace CharacterCreator.Winforms
 
                 if (result == DialogResult.Cancel)
                     return;
+
+                var error = _character.Validate();
+
+                if (!String.IsNullOrEmpty(error))
+                {
+                    Error(error, "Edit failed! Reverting changes."); 
+                    return;
+                }
 
                 RefreshForm(_character);
                 RefreshRoster();
@@ -66,8 +77,21 @@ namespace CharacterCreator.Winforms
                 return;
 
             _character = form.character;
+            var error = _character.Validate();
+
+            if (!String.IsNullOrEmpty(error))
+            {
+                Error(error, "Can't add character");
+                return;
+            }
+
             RefreshForm(_character);
             RefreshRoster();
+        }
+
+        private void Error(string error, string title)
+        {
+            MessageBox.Show(this, error, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void RefreshForm(Character character)
@@ -80,13 +104,11 @@ namespace CharacterCreator.Winforms
             _labRace.Text = character.Race;
             _labProfession.Text = character.Profession;
             _richDescription.Text = character.Description;
-
         }
 
         private void RefreshRoster()
         {
-            var roster = new BindingList<Character>();
-            roster.Add(_character);
+            var roster = new BindingList<Character> {_character};
             _lbRoster.DataSource = roster;
             _lbRoster.DisplayMember = "Name";
         }

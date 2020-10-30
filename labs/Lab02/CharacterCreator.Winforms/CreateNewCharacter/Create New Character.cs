@@ -10,17 +10,19 @@ using System.Windows.Forms;
 
 namespace CharacterCreator
 {
+    /// <summary> The form that creates the character </summary>
     public partial class FormCreateCharacter : Form
     {
-        /// <description> This form creates a character </description>
         public FormCreateCharacter()
         {
             InitializeComponent();
         }
 
         private Character _character = new Character();
-        public Character character = new Character();
+        public Character character;
 
+        /// <summary> This initializes the form with a character you've already created. </summary>
+        /// <param name="editedCharacter"> The character you're editing. </param>
         public FormCreateCharacter (Character editedCharacter) : this()
         {
             _character = editedCharacter;
@@ -36,70 +38,12 @@ namespace CharacterCreator
             Text = "Edit Character";
         }
 
-        private void Error(string error)
-        {
-            MessageBox.Show(this, error, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void _buttonSave_Click(object sender, EventArgs e)
-        {
-            if (!ValidateChildren())
-            {
-                DialogResult = DialogResult.None;
-                return;
-            }
-
-            var button = sender as Button;
-
-            if (button == null)
-                return;
-
-            Int32.TryParse(_txtBrains.Text, out int _brains);
-            Int32.TryParse(_txtBrawn.Text, out int _brawn);
-            Int32.TryParse(_txtMoxie.Text, out int _moxie);
-            Int32.TryParse(_txtLuck.Text, out int _luck);
-            Int32.TryParse(_txtSanity.Text, out int _sanity);
-
-            _character.Name = _txtName.Text;
-            _character.Profession = _comboProfession.Text;
-            _character.Race =_comboRace.Text;
-            _character.Description = _richDescription.Text;
-            _character.Brains = _brains;
-            _character.Brawn = _brawn;
-            _character.Luck = _luck;
-            _character.Moxie = _moxie;
-            _character.Sanity = _sanity;
-            var error = _character.Validate();
-
-
-            if (!String.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(this, error, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                DialogResult = DialogResult.None;
-                return;
-            }
-
-            character = _character;
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-
         private void _buttonCancel_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            return;
+
         }
 
+        /// <summary> UI validating name </summary>
         private void OnValidateName(object sender, CancelEventArgs e)
         {
             var control = sender as TextBox;
@@ -126,9 +70,25 @@ namespace CharacterCreator
             }
         }
 
+        private void OnValidatingDescription(object sender, CancelEventArgs e)
+        {
+            var control = sender as RichTextBox;
+
+            if (control.Text.Length > Character.MaxDescriptionLength)
+            {
+                _errors.SetError(control, $"Description can't be more than {Character.MaxDescriptionLength}");
+                e.Cancel = true;
+            }
+
+            else
+                _errors.SetError(control, "");
+        }
+
+        /// <summary> UI validating the dropdowns. </summary>
         private void OnValidatingDropDown(object sender, CancelEventArgs e)
         {
             var control = sender as ComboBox;
+
             if (String.IsNullOrEmpty(control.Text))
             {
                 _errors.SetError(control, "Name is required!");
@@ -136,15 +96,14 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
         }
 
+        /// <summary> UI validating the stats </summary>
         private void OnValidatingStats(object sender, CancelEventArgs e)
         {
             var control = sender as TextBox;
-            var success = Int32.TryParse(control.Text, out int stat);
+            var success = Int32.TryParse(control.Text, out var stat);
 
             if (String.IsNullOrEmpty(control.Text))
             {
@@ -153,9 +112,7 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
             
             if (!success)
             {
@@ -164,9 +121,7 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
 
             if (stat < 1 || stat > 100)
             {
@@ -175,15 +130,14 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
         }
 
+        /// <summary> UI validating Brains </summary>
         private void OnValidatingBrains(object sender, CancelEventArgs e)
         {
             var control = sender as TextBox;
-            var success = Int32.TryParse(control.Text, out int stat);
+            var success = Int32.TryParse(control.Text, out var stat);
 
             if (String.IsNullOrEmpty(control.Text))
             {
@@ -192,9 +146,7 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
 
             if (!success)
             {
@@ -203,9 +155,7 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
 
             if (stat < -2000000 || stat > 100)
             {
@@ -214,9 +164,7 @@ namespace CharacterCreator
             }
 
             else
-            {
                 _errors.SetError(control, "");
-            }
         }
     }
 }

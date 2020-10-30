@@ -99,8 +99,8 @@ namespace CharacterCreator
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.TabStop = false;
             this.richTextBox1.Text = "Stats can be between 1 and 100, except brains, which can be between -2,000,000 an" +
-    "d 100. Genius has its limits, but stupidity is bottomless.";
-            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+    "d 100. Genius goes a long way, but stupidity is truly infinite.";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.Form1_Load);
             // 
             // _richDescription
             // 
@@ -111,6 +111,7 @@ namespace CharacterCreator
             this._richDescription.TabIndex = 4;
             this._richDescription.Text = "";
             this._richDescription.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
+            this._richDescription.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingDescription);
             // 
             // label4
             // 
@@ -233,8 +234,8 @@ namespace CharacterCreator
             "A Compiler Error",
             "Mass Hallucination",
             "Killer Clown",
-            "Stick With An Angry Face Scribbled On It",
-            "Anthropomorphic Washing Machine",
+            "A Stick With An Angry Face",
+            "Anthropomorphic Cat",
             "Sentient Lollipop",
             "A Floating Orb Of Eyes",
             "A Wasp Made Of Bees"});
