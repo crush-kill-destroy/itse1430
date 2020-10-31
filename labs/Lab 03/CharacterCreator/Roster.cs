@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CharacterCreator
 {
@@ -16,43 +17,87 @@ namespace CharacterCreator
     {
         public Character Add ( Character character )
         {
-            //TODO: ERROR: Character is invalid
-            //TODO: ERROR: Check ID
+            var validation = new ObjectValidator();
+            var validationResults = validation.TryValidateFullObject(character);
+            var error = validation.GetValidationResults(validationResults);
+            error += NameCheck(character.Name, character.Id);
 
-            //if (NameCheck(character.Name) != true)
-            //    return null;
+            if (!String.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Addition Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
 
             character.Id = s_id++;
             _characters.Add(character);
             return character;
         }
 
+        /// <summary>Deletes a character</summary>
         public void Delete ( int id )
         {
-            //TODO: ERROR ID <= 0
+            var error = IdLessThanZero(id);
+            if (error == true)
+                return;
+
             var character = IdMatch(id);
             _characters.Remove(character);
         }
 
+        private bool IdLessThanZero (int id)
+        {
+            if (id <= 0)
+            {
+                MessageBox.Show("ID is out of range!", "Delete Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Edits a character</summary>
         public Character Get ( int id )
         {
             var character = IdMatch(id);
             return (character == null) ? null : CopyCharacter(character);
         }
 
+        /// <summary>Grabs the entire roster</summary>
         public IEnumerable<Character> GetAll ()
         {
             foreach (var character in _characters)
                 yield return CopyCharacter(character);
         }
 
+        /// <summary>Edits a character</summary>
+        /// <param name="id">ID of the character to update</param>
+        /// <param name="update">The character you are updating it with.</param>
         public void Update ( int id, Character update )
         {
-            //TODO: validate ID, validate name, validate character
+            var validation = new ObjectValidator();
+            var validationResults = validation.TryValidateFullObject(update);
+            var error = validation.GetValidationResults(validationResults);
+            error += NameCheck(update.Name, update.Id);
             var original = IdMatch(id);
+
+            if (original == null)
+                error += "Character not found!";
+            else
+            {
+                validationResults = validation.TryValidateFullObject(original);
+                error += validation.GetValidationResults(validationResults);
+            }
+
+            if (!String.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Update Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             CloneCharacter(update, original);
         }
 
+        /// <summary>Returns characters by their ID</summary>
         private Character IdMatch ( int id )
         {
             foreach (var character in _characters)
@@ -64,6 +109,9 @@ namespace CharacterCreator
             return null;
         }
 
+        /// <summary>Feeds things through CloneCharacter</summary>
+        /// <param name="original">The base you are copying from/</param>
+        /// <returns>A copy of the original.</returns>
         private Character CopyCharacter(Character original)
         {
                 var copy = new Character();
@@ -71,6 +119,9 @@ namespace CharacterCreator
                 return copy;
         }
 
+        /// <summary>Copies one character's attirbutes to another.</summary>
+        /// <param name="original">Base character to be copied.</param>
+        /// <param name="copy">The character to be copied to.</param>
         private void CloneCharacter ( Character original, Character copy )
         {
             copy.Id = original.Id;
@@ -85,13 +136,13 @@ namespace CharacterCreator
             copy.Constitution = original.Constitution;
         }
 
-        private bool NameCheck(string name)
+        private string NameCheck(string name, int id)
         {
             foreach (var character in GetAll())
-                if (character.Name == name)
-                    return false;
+                if (character.Name == name && character.Id != id)
+                    return "You're already using that name!";
 
-            return true;
+            return null;
         }
 
         private static int s_id = 1;

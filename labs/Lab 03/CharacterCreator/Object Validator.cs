@@ -21,5 +21,15 @@ namespace CharacterCreator
 
             return validationResults;
         }
+
+        public string GetValidationResults ( IEnumerable<ValidationResult> errors )
+        {
+            var builder = new StringBuilder();
+            foreach (var error in errors)
+                builder.AppendLine(error.ToString());
+
+            return builder.ToString();
+        }
     }
+
 }

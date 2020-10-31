@@ -28,7 +28,6 @@ namespace CharacterCreator.Winforms
             if (form.ShowDialog(this) == DialogResult.Cancel)
                 return;
 
-            //Add the character
             _character = form.SelectedCharacter;
             AddCharacter(form.SelectedCharacter);
         }
@@ -36,13 +35,6 @@ namespace CharacterCreator.Winforms
         private void AddCharacter ( Character character )
         {
             var newCharacter = _characters.Add(character);
-            //TODO clean up messagebox
-            if (newCharacter == null)
-            {
-                MessageBox.Show(this, "Message", "Add Failed", MessageBoxButtons.OK);
-                return;
-            };
-
             RefreshRoster();
         }
 
