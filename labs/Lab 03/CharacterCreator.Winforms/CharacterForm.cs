@@ -5,6 +5,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -23,24 +24,17 @@ namespace CharacterCreator.Winforms
         {
             InitializeComponent();
         }
-        #endregion
 
         /// <summary>Gets or sets the selected character.</summary>
         public Character SelectedCharacter { get; set; }
 
-        //Called when the form loads
         protected override void OnLoad ( EventArgs e )
         {
-            //Load the UI
             LoadUI();
         }
 
-        #region Event Handlers
-
-        //Called when the Save button is clicked
         private void OnSave ( object sender, EventArgs e )
         {
-            //Save the changes
             var character = SaveCharacter();
 
             var validationResults = new ObjectValidator().TryValidateFullObject(character);
@@ -55,14 +49,10 @@ namespace CharacterCreator.Winforms
                 return;
             }
 
-            //Close the form
             SelectedCharacter = character;
             DialogResult = DialogResult.OK;
             Close();
         }
-        #endregion
-
-        #region Private Members
 
         private void LoadUI ()
         {
@@ -78,19 +68,13 @@ namespace CharacterCreator.Winforms
 
         private void LoadProfessions ()
         {
-            //Bind to the standard professions 
             _cbProfession.DataSource = StandardProfessions.Professions;
-
-            //Don't select anything by default
             _cbProfession.SelectedIndex = -1;
         }
 
         private void LoadRaces ()
         {
-            //Bind to the standard races
             _cbRace.DataSource = StandardRaces.Races;
-
-            //Don't select anything by default
             _cbRace.SelectedIndex = -1;
         }
 
@@ -100,27 +84,38 @@ namespace CharacterCreator.Winforms
             SelectProfession(character.Profession);
             SelectRace(character.Race);
             _txtBiography.Text = character.Biography;
-
-            _txtStrength.Value = character.Strength;
-            _txtIntelligence.Value = character.Intelligence;
-            _txtAgility.Value = character.Agility;
-            _txtConstitution.Value = character.Constitution;
-            _txtCharisma.Value = character.Charisma;
+            _txtIntelligence.Text = character.Intelligence.ToString();
+            _txtStrength.Text = character.Strength.ToString();
+            _txtAgility.Text = character.Agility.ToString();
+            _txtCharisma.Text = character.Charisma.ToString();
+            _txtConstitution.Text = character.Constitution.ToString();
         }
 
         private Character SaveCharacter ( )
         {
-            var character = new Character();
-            character.Name = _txtName.Text;
-            character.Profession = _cbProfession.SelectedItem as Profession;
-            character.Race = _cbRace.SelectedItem as Race;
-            character.Biography = _txtBiography.Text;
+            var tempStrength = _txtStrength.Text;
+            var tempIntelligence = _txtIntelligence.Text;
+            var tempAgility = _txtAgility.Text;
+            var tempConstitution = _txtConstitution.Text;
+            var tempCharisma = _txtCharisma.Text;
 
-            character.Strength = (int)_txtStrength.Value;
-            character.Intelligence = (int)_txtIntelligence.Value;
-            character.Agility = (int)_txtAgility.Value;
-            character.Constitution = (int)_txtConstitution.Value;
-            character.Charisma = (int)_txtCharisma.Value;
+            Int32.TryParse(tempStrength, out var intStrength);
+            Int32.TryParse(tempIntelligence, out var intIntelligence);
+            Int32.TryParse(tempAgility, out var intAgility);
+            Int32.TryParse(tempConstitution, out var intConstitution);
+            Int32.TryParse(tempCharisma, out var intCharisma);
+
+            var character = new Character {
+                Name = _txtName.Text,
+                Profession = _cbProfession.SelectedItem as Profession,
+                Race = _cbRace.SelectedItem as Race,
+                Biography = _txtBiography.Text,
+                Strength = intStrength,
+                Intelligence = intIntelligence,
+                Agility = intAgility,
+                Constitution = intConstitution,
+                Charisma = intCharisma
+            };
 
             return character;
         }
@@ -148,6 +143,66 @@ namespace CharacterCreator.Winforms
                 };
             };
         }
-        #endregion
+
+        private void OnValidateName ( object sender, CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+            
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "Name is required!");
+                e.Cancel = true;
+            } else
+                _errors.SetError(control, "");
+        }
+
+        /// <summary> UI checking you selected something from the drop-downs. </summary>
+        private void OnValidatingDropDown ( object sender, CancelEventArgs e )
+        {
+            var control = sender as ComboBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "You need to pick something!");
+                e.Cancel = true;
+            }
+            
+            else
+                _errors.SetError(control, "");
+        }
+
+        /// <summary> UI validating the stats </summary>
+        private void OnValidatingStats ( object sender, CancelEventArgs e )
+        {
+            var control = sender as TextBox;
+
+            if (String.IsNullOrEmpty(control.Text))
+            {
+                _errors.SetError(control, "Stats cannot be empty!");
+                e.Cancel = true;
+            } else
+                _errors.SetError(control, "");
+
+            var success = Int32.TryParse(control.Text, out var stat);
+
+            if (!success)
+            {
+                _errors.SetError(control, "Numbers only!");
+                e.Cancel = true;
+            } else
+                _errors.SetError(control, "");
+
+            if (stat < 1 || stat > 100)
+            {
+                _errors.SetError(control, "Between 1 and 100!");
+                e.Cancel = true;
+            } else
+                _errors.SetError(control, "");
+        }
+
+        private void _txtBiography_TextChanged ( object sender, EventArgs e )
+        {
+
+        }
     }
 }

@@ -62,9 +62,11 @@ namespace CharacterCreator
             return (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
         }
 
+        /// <summary>Represents the name and bio, respectively.</summary>
         private string _name, _bio;
         #endregion
 
+        /// <summary>Validates the results</summary>
         public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
         {
             if (String.IsNullOrEmpty(Name))

@@ -72,12 +72,14 @@ namespace CharacterCreator.Winforms
             if (character == null)
                 return;
 
-            var form = new CharacterForm();
-            form.SelectedCharacter = character;
+            var form = new CharacterForm {
+                SelectedCharacter = character
+            };
 
             if (form.ShowDialog(this) == DialogResult.Cancel)
                 return;
 
+            form.SelectedCharacter.Id = character.Id;
             _characters.Update(character.Id, form.SelectedCharacter);
 
             RefreshRoster();
@@ -96,9 +98,11 @@ namespace CharacterCreator.Winforms
         private Character GetSelectedCharacter ()
         {
             var character = _lstCharacters.SelectedItem as Character;
-            return _characters.Get(character.Id);
+
+            return character == null ? null : _characters.Get(character.Id);
         }
 
+        /// <summary>Refreshes the main menu.</summary>
         private void RefreshRoster()
         {
             _lstCharacters.DataSource = _characters.GetAll().ToArray();

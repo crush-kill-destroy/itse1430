@@ -22,7 +22,7 @@ namespace CharacterCreator
             //if (NameCheck(character.Name) != true)
             //    return null;
 
-            character.Id = _id++;
+            character.Id = s_id++;
             _characters.Add(character);
             return character;
         }
@@ -94,7 +94,7 @@ namespace CharacterCreator
             return true;
         }
 
-        private static int _id = 1;
+        private static int s_id = 1;
         private List<Character> _characters = new List<Character>();
     }
 }
