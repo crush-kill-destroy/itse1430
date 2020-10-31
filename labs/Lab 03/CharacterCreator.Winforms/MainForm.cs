@@ -12,15 +12,10 @@ namespace CharacterCreator.Winforms
 {
     public partial class MainForm : Form
     {
-        #region Construction
-
         public MainForm ()
         {
             InitializeComponent();
         }
-        #endregion
-
-        #region Event Handlers
 
         private void OnFileExit ( object sender, EventArgs e )
         {
@@ -89,12 +84,9 @@ namespace CharacterCreator.Winforms
         {
             var form = new AboutForm();
             form.ShowDialog(this);
-        }        
-        #endregion
+        }
 
-        #region Private Members
-
-        // Gets the selected character, if any
+        /// <summary>Gets the selected character, if any</summary>
         private Character GetSelectedCharacter ()
         {
             var character = _lstCharacters.SelectedItem as Character;
@@ -110,7 +102,6 @@ namespace CharacterCreator.Winforms
 
         private ICharacterRoster _characters = new Roster();
         private Character _character = new Character();
-        #endregion
 
         private void _lstCharacters_SelectedIndexChanged ( object sender, EventArgs e )
         {

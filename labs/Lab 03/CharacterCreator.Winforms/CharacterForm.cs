@@ -17,9 +17,6 @@ namespace CharacterCreator.Winforms
     /// <summary>Provides a UI for creating a character.</summary>
     public partial class CharacterForm : Form
     {
-        #region Construction
-
-        /// <summary>Initializes an instance of the <see cref="CharacterForm"/> class.</summary>
         public CharacterForm ()
         {
             InitializeComponent();

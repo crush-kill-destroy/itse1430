@@ -56,7 +56,6 @@ namespace CharacterCreator
         /// <summary>Gets or sets the charisma.</summary>
         public int Charisma { get; set; }
 
-        #region Private Members                
         private bool ValidateAttribute ( int value )
         {
             return (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
@@ -64,7 +63,6 @@ namespace CharacterCreator
 
         /// <summary>Represents the name and bio, respectively.</summary>
         private string _name, _bio;
-        #endregion
 
         /// <summary>Validates the results</summary>
         public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
