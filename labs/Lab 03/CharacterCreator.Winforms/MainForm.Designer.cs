@@ -54,7 +54,7 @@
             this.aboutToolStripMenuItem});
             this._mainMenu.Location = new System.Drawing.Point(0, 0);
             this._mainMenu.Name = "_mainMenu";
-            this._mainMenu.Size = new System.Drawing.Size(459, 33);
+            this._mainMenu.Size = new System.Drawing.Size(459, 36);
             this._mainMenu.TabIndex = 0;
             this._mainMenu.Text = "menuStrip1";
             // 
@@ -63,7 +63,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 29);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(54, 32);
             this.fileToolStripMenuItem.Text = "&File";
             // 
             // exitToolStripMenuItem
@@ -81,7 +81,7 @@
             this.editToolStripMenuItem,
             this.deleteToolStripMenuItem});
             this.characterToolStripMenuItem.Name = "characterToolStripMenuItem";
-            this.characterToolStripMenuItem.Size = new System.Drawing.Size(102, 29);
+            this.characterToolStripMenuItem.Size = new System.Drawing.Size(102, 32);
             this.characterToolStripMenuItem.Text = "&Character";
             // 
             // newToolStripMenuItem
@@ -113,7 +113,7 @@
             this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem1});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(65, 32);
             this.aboutToolStripMenuItem.Text = "&Help";
             // 
             // aboutToolStripMenuItem1
@@ -126,12 +126,13 @@
             // 
             // _lstCharacters
             // 
+            this._lstCharacters.Dock = System.Windows.Forms.DockStyle.Fill;
             this._lstCharacters.FormattingEnabled = true;
             this._lstCharacters.ItemHeight = 20;
-            this._lstCharacters.Location = new System.Drawing.Point(0, 37);
+            this._lstCharacters.Location = new System.Drawing.Point(0, 36);
             this._lstCharacters.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._lstCharacters.Name = "_lstCharacters";
-            this._lstCharacters.Size = new System.Drawing.Size(459, 544);
+            this._lstCharacters.Size = new System.Drawing.Size(459, 550);
             this._lstCharacters.TabIndex = 1;
             this._lstCharacters.SelectedIndexChanged += new System.EventHandler(this._lstCharacters_SelectedIndexChanged);
             // 

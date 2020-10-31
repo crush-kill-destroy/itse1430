@@ -19,8 +19,8 @@ namespace CharacterCreator
             //TODO: ERROR: Character is invalid
             //TODO: ERROR: Check ID
 
-            if (NameCheck(character.Name) != true)
-                return null;
+            //if (NameCheck(character.Name) != true)
+            //    return null;
 
             character.Id = _id++;
             _characters.Add(character);
@@ -36,7 +36,6 @@ namespace CharacterCreator
 
         public Character Get ( int id )
         {
-            //TODO: ERROR ID <= 0
             var character = IdMatch(id);
             return (character == null) ? null : CopyCharacter(character);
         }
@@ -47,11 +46,11 @@ namespace CharacterCreator
                 yield return CopyCharacter(character);
         }
 
-        public void Update ( int id, Character replacement )
+        public void Update ( int id, Character update )
         {
-            //TODO: validate ID, validate name, validate character, check for null
+            //TODO: validate ID, validate name, validate character
             var original = IdMatch(id);
-            CloneCharacter(original, replacement);
+            CloneCharacter(update, original);
         }
 
         private Character IdMatch ( int id )
@@ -67,12 +66,12 @@ namespace CharacterCreator
 
         private Character CopyCharacter(Character original)
         {
-                var replacement = new Character();
-                CloneCharacter(original, replacement);
-                return original;
+                var copy = new Character();
+                CloneCharacter(original, copy);
+                return copy;
         }
 
-        static public void CloneCharacter ( Character original, Character copy )
+        private void CloneCharacter ( Character original, Character copy )
         {
             copy.Id = original.Id;
             copy.Name = original.Name;

@@ -60,12 +60,14 @@ namespace CharacterCreator.Winforms
             if (MessageBox.Show(this, $"Are you sure you want to delete {character.Name}?", "Delete?", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 return;
 
-            _character = null;
+            _characters.Delete(character.Id);
+
             RefreshRoster();
         }
 
         private void OnCharacterEdit ( object sender, EventArgs e )
         {
+            //TODO: Replacement error message
             var character = GetSelectedCharacter();
             if (character == null)
                 return;
@@ -76,7 +78,7 @@ namespace CharacterCreator.Winforms
             if (form.ShowDialog(this) == DialogResult.Cancel)
                 return;
 
-            Roster.CloneCharacter(form.SelectedCharacter, character);
+            _characters.Update(character.Id, form.SelectedCharacter);
 
             RefreshRoster();
         }
@@ -93,7 +95,8 @@ namespace CharacterCreator.Winforms
         // Gets the selected character, if any
         private Character GetSelectedCharacter ()
         {
-            return _lstCharacters.SelectedItem as Character;
+            var character = _lstCharacters.SelectedItem as Character;
+            return _characters.Get(character.Id);
         }
 
         private void RefreshRoster()
