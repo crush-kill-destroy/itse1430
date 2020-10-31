@@ -1,8 +1,7 @@
 ﻿/*
  * ITSE 1430
- * Character Creator
- * 
- * Sample implementation.
+ * Matthew Traywick
+ * Lab 03
  */
 using System;
 using System.Collections.Generic;

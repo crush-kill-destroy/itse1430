@@ -1,8 +1,7 @@
 ﻿/*
  * ITSE 1430
- * Lab 03 - Character Creator
- * 
- * Sample implementation.
+ * Matthew Traywick
+ * Lab 03
  */
 using System;
 using System.Windows.Forms;
@@ -35,14 +34,20 @@ namespace CharacterCreator.Winforms
                 return;
 
             //Add the character
+            _character = form.SelectedCharacter;
             AddCharacter(form.SelectedCharacter);
         }
 
         private void AddCharacter ( Character character )
         {
-            //TODO: Fix ErrorCheck call
-            //TODO: ErrorCheck(character, "error", "Add Failed");
-            _characters.Add(character);
+            var newCharacter = _characters.Add(character);
+            //TODO clean up messagebox
+            if (newCharacter == null)
+            {
+                MessageBox.Show(this, "Message", "Add Failed", MessageBoxButtons.OK);
+                return;
+            };
+
             RefreshRoster();
         }
 
@@ -71,7 +76,8 @@ namespace CharacterCreator.Winforms
             if (form.ShowDialog(this) == DialogResult.Cancel)
                 return;
 
-            _character = form.SelectedCharacter;
+            Roster.CloneCharacter(form.SelectedCharacter, character);
+
             RefreshRoster();
         }
 
@@ -87,7 +93,7 @@ namespace CharacterCreator.Winforms
         // Gets the selected character, if any
         private Character GetSelectedCharacter ()
         {
-            return _character;
+            return _lstCharacters.SelectedItem as Character;
         }
 
         private void RefreshRoster()
@@ -95,8 +101,8 @@ namespace CharacterCreator.Winforms
             _lstCharacters.DataSource = _characters.GetAll().ToArray();
         }
 
-        private ICharacterRoster _characters = new CharacterRoster();
-        private Character _character;
+        private ICharacterRoster _characters = new Roster();
+        private Character _character = new Character();
         #endregion
 
         private void _lstCharacters_SelectedIndexChanged ( object sender, EventArgs e )

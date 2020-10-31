@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Character.cs" />
-    <Compile Include="CharacterRoster.cs" />
+    <Compile Include="Roster.cs" />
     <Compile Include="ICharacterRoster.cs" />
     <Compile Include="Object Validator.cs" />
     <Compile Include="Professions\Wizard.cs" />

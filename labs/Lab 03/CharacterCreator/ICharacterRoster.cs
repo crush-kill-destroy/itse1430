@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿/*
+ * ITSE 1430
+ * Matthew Traywick
+ * Lab 03
+ */
+using System.Collections.Generic;
 
 namespace CharacterCreator
 {

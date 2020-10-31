@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * ITSE 1430
+ * Matthew Traywick
+ * Lab 03
+ */
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,12 +12,15 @@ using System.Threading.Tasks;
 
 namespace CharacterCreator
 {
-    public class CharacterRoster : ICharacterRoster
+    public class Roster : ICharacterRoster
     {
         public Character Add ( Character character )
         {
             //TODO: ERROR: Character is invalid
             //TODO: ERROR: Check ID
+
+            if (NameCheck(character.Name) != true)
+                return null;
 
             character.Id = _id++;
             _characters.Add(character);
@@ -64,18 +72,27 @@ namespace CharacterCreator
                 return original;
         }
 
-        private void CloneCharacter ( Character original, Character replacement )
+        static public void CloneCharacter ( Character original, Character copy )
         {
-            original.Id = replacement.Id;
-            original.Name = replacement.Name;
-            original.Profession = replacement.Profession;
-            original.Race = replacement.Race;
-            original.Biography = replacement.Biography;
-            original.Agility = replacement.Agility;
-            original.Charisma = replacement.Charisma;
-            original.Strength = replacement.Strength;
-            original.Intelligence = replacement.Intelligence;
-            original.Constitution = replacement.Constitution;
+            copy.Id = original.Id;
+            copy.Name = original.Name;
+            copy.Profession = original.Profession;
+            copy.Race = original.Race;
+            copy.Biography = original.Biography;
+            copy.Agility = original.Agility;
+            copy.Charisma = original.Charisma;
+            copy.Strength = original.Strength;
+            copy.Intelligence = original.Intelligence;
+            copy.Constitution = original.Constitution;
+        }
+
+        private bool NameCheck(string name)
+        {
+            foreach (var character in GetAll())
+                if (character.Name == name)
+                    return false;
+
+            return true;
         }
 
         private static int _id = 1;
