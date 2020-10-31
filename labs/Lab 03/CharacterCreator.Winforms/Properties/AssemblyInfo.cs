@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("ITSE 1430")]
 [assembly: AssemblyProduct("Character Creator")]
-[assembly: AssemblyCopyright("Copyright ©  2018 TCCD")]
+[assembly: AssemblyCopyright("Matthew Traywick")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

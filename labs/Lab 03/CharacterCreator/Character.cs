@@ -5,11 +5,13 @@
  * Sample implementation.
  */
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace CharacterCreator
 {
     /// <summary>Represents a character.</summary>
-    public class Character
+    public class Character : IValidatableObject
     {
         /// <summary>Gets the maximum attribute value.</summary>
         public const int MaximumAttributeValue = 100;
@@ -55,64 +57,41 @@ namespace CharacterCreator
         /// <summary>Gets or sets the charisma.</summary>
         public int Charisma { get; set; }
 
-        public bool Validate ( out string errorMessage )
-        {
-            if (String.IsNullOrEmpty(Name))
-            {
-                errorMessage = "Name is required";
-                return false;
-            };
-
-            if (Profession == null)
-            {
-                errorMessage = "Profession is required";
-                return false;
-            };
-
-            if (Race == null)
-            {
-                errorMessage = "Race is required";
-                return false;
-            };
-
-            if (!ValidateAttribute(Strength))
-            {
-                errorMessage = $"Strength must be between {MinimumAttributeValue} and {MaximumAttributeValue}";
-                return false;
-            };
-            if (!ValidateAttribute(Intelligence))
-            {
-                errorMessage = $"Intelligence must be between {MinimumAttributeValue} and {MaximumAttributeValue}";
-                return false;
-            };
-            if (!ValidateAttribute(Agility))
-            {
-                errorMessage = $"Agility must be between {MinimumAttributeValue} and {MaximumAttributeValue}";
-                return false;
-            };
-            if (!ValidateAttribute(Constitution))
-            {
-                errorMessage = $"Constitution must be between {MinimumAttributeValue} and {MaximumAttributeValue}";
-                return false;
-            };
-            if (!ValidateAttribute(Charisma))
-            {
-                errorMessage = $"Charisma must be between {MinimumAttributeValue} and {MaximumAttributeValue}";
-                return false;
-            };
-
-            errorMessage = null;
-            return true;            
-        }
-
-        #region Private Members
-                
+        #region Private Members                
         private bool ValidateAttribute ( int value )
         {
             return (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
         }
-        
+
         private string _name, _bio;
         #endregion
+
+        public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
+        {
+            if (String.IsNullOrEmpty(Name))
+                yield return new ValidationResult("Name is required", new[] { nameof(Name) });
+
+            if (Profession == null)
+                yield return new ValidationResult("Profession is required", new[] { nameof(Profession) });
+
+            if (Race == null)
+                yield return new ValidationResult("Race is required", new[] { nameof(Race) });
+
+            if (!ValidateAttribute(Strength))
+                yield return new ValidationResult($"Strength must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Strength) });
+            if (!ValidateAttribute(Intelligence))
+                yield return new ValidationResult($"Intelligence must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Intelligence) });
+            if (!ValidateAttribute(Agility))
+                yield return new ValidationResult($"Agility must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Agility) });
+            if (!ValidateAttribute(Constitution))
+                yield return new ValidationResult($"Constitution must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Constitution) });
+            if (!ValidateAttribute(Charisma))
+                yield return new ValidationResult($"Charisma must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Charisma) });
+        }
+
+        public override string ToString ()
+        {
+            return Name;
+        }
     }
 }

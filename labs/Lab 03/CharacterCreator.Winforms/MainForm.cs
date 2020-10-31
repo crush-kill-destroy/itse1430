@@ -1,12 +1,13 @@
 ﻿/*
  * ITSE 1430
- * Character Creator
+ * Lab 03 - Character Creator
  * 
  * Sample implementation.
  */
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CharacterCreator.Winforms
 {
@@ -19,7 +20,6 @@ namespace CharacterCreator.Winforms
             InitializeComponent();
         }
         #endregion
-
 
         #region Event Handlers
 
@@ -41,8 +41,9 @@ namespace CharacterCreator.Winforms
         private void AddCharacter ( Character character )
         {
             //TODO: Fix ErrorCheck call
-            //ErrorCheck(character, "error", "Add Failed");
-            var error = _characters.Add(character);
+            //TODO: ErrorCheck(character, "error", "Add Failed");
+            _characters.Add(character);
+            RefreshRoster();
         }
 
         private void OnCharacterDelete ( object sender, EventArgs e )
@@ -74,13 +75,6 @@ namespace CharacterCreator.Winforms
             RefreshRoster();
         }
 
-        private void ErrorCheck ( string error, string title )
-        {
-            //TODO: FIX
-            if (!String.IsNullOrEmpty(error))
-                MessageBox.Show(this, error, title, MessageBoxButtons.OK);
-        }
-
         private void OnHelpAbout ( object sender, EventArgs e )
         {
             var form = new AboutForm();
@@ -98,16 +92,7 @@ namespace CharacterCreator.Winforms
 
         private void RefreshRoster()
         {
-            _lstCharacters.Items.Clear();
-
-            if (_character == null)
-                return;
-
-            var roster = new Character[1];
-            roster[0] = _character;
-            
-            _lstCharacters.Items.AddRange(roster);
-            _lstCharacters.DisplayMember = nameof(Character.Name);
+            _lstCharacters.DataSource = _characters.GetAll().ToArray();
         }
 
         private ICharacterRoster _characters = new CharacterRoster();

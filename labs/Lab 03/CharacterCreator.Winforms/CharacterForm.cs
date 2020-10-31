@@ -5,8 +5,11 @@
  * Sample implementation.
  */
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
-
 using CharacterCreator.Professions;
 
 namespace CharacterCreator.Winforms
@@ -37,14 +40,21 @@ namespace CharacterCreator.Winforms
 
         //Called when the Save button is clicked
         private void OnSave ( object sender, EventArgs e )
-        {            
+        {
             //Save the changes
-            var character = SaveCharacter();            
-            if (!character.Validate(out var error))
+            var character = SaveCharacter();
+
+            var validationResults = new ObjectValidator().TryValidateFullObject(character);
+            if (validationResults.Count() > 0)
             {
-                MessageBox.Show(this, error, "Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var builder = new StringBuilder();
+                foreach (var error in validationResults)
+                    builder.AppendLine(error.ErrorMessage);
+
+                MessageBox.Show(this, builder.ToString(), "Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                DialogResult = DialogResult.None;
                 return;
-            };
+            }
 
             //Close the form
             SelectedCharacter = character;

@@ -7,7 +7,7 @@ namespace CharacterCreator
         Character Add ( Character character );
         void Delete ( int id );
         Character Get ( int id );
-        List<Character> GetAll ();
-        void Update ( int id, Character character );
+        IEnumerable<Character> GetAll ();
+        void Update ( int id, Character replacement );
     }
 }

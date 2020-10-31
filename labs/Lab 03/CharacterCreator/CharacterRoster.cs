@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,20 +30,20 @@ namespace CharacterCreator
         {
             //TODO: ERROR ID <= 0
             var character = IdMatch(id);
-            return character;
+            return (character == null) ? null : CopyCharacter(character);
         }
 
-        public List<Character> GetAll ()
+        public IEnumerable<Character> GetAll ()
         {
-            var characters = new List<Character>();
-            return characters;
+            foreach (var character in _characters)
+                yield return CopyCharacter(character);
         }
-        public void Update ( int id, Character character )
+
+        public void Update ( int id, Character replacement )
         {
-            //TODO: Character = invalid
-            //TODO: Existing character cannot be found or is invalid
-            //TODO: The character's name is changed and another character has that name.
-            return null;
+            //TODO: validate ID, validate name, validate character, check for null
+            var original = IdMatch(id);
+            CloneCharacter(original, replacement);
         }
 
         private Character IdMatch ( int id )
@@ -56,23 +57,28 @@ namespace CharacterCreator
             return null;
         }
 
-        private Character CopyMachine(Character original)
+        private Character CopyCharacter(Character original)
         {
-            var copy = new Character();
-            copy.Id = original.Id;
-            copy.Name = original.Name;
-            copy.Profession = original.Profession;
-            copy.Race = original.Race;
-            copy.Biography = original.Biography;
-            copy.Agility = original.Agility;
-            copy.Charisma = original.Charisma;
-            copy.Strength = original.Strength;
-            copy.Intelligence = original.Intelligence;
-            copy.Constitution = original.Constitution;
-            return copy;
+                var replacement = new Character();
+                CloneCharacter(original, replacement);
+                return original;
         }
 
-        private int _id = 1;
+        private void CloneCharacter ( Character original, Character replacement )
+        {
+            original.Id = replacement.Id;
+            original.Name = replacement.Name;
+            original.Profession = replacement.Profession;
+            original.Race = replacement.Race;
+            original.Biography = replacement.Biography;
+            original.Agility = replacement.Agility;
+            original.Charisma = replacement.Charisma;
+            original.Strength = replacement.Strength;
+            original.Intelligence = replacement.Intelligence;
+            original.Constitution = replacement.Constitution;
+        }
+
+        private static int _id = 1;
         private List<Character> _characters = new List<Character>();
     }
 }
