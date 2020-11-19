@@ -124,7 +124,7 @@ namespace Nile.Windows
                 UpdateList();
             } catch (SqlException)
             {
-                throw new Exception("Database failure!");
+                ErrorMessage("Database failure!", "Deletion Failed!");
             } catch (Exception e)
             {
                 ErrorMessage(e.Message, "Deletion Failed!");
