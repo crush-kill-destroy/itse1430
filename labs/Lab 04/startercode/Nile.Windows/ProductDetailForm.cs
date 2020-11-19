@@ -1,5 +1,7 @@
 /*
  * ITSE 1430
+ * Matthew Traywick
+ * Lab 04
  */
 using System;
 using System.ComponentModel;
@@ -62,7 +64,7 @@ namespace Nile.Windows
 
             var product = new Product()
             {
-                Id = Product?.Id ?? 0,
+                Id = Product?.Id ?? 1,
                 Name = _txtName.Text,
                 Description = _txtDescription.Text,
                 Price = GetPrice(_txtPrice),

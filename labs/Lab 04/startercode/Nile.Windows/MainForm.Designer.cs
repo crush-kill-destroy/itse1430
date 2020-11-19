@@ -39,20 +39,18 @@ namespace Nile.Windows
             this._miProductEdit = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this._miProductDelete = new System.Windows.Forms.ToolStripMenuItem();
-            this._gridProducts = new System.Windows.Forms.DataGridView();
             this.AboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._miAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this._gridProducts = new System.Windows.Forms.DataGridView();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.descriptionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.isDiscontinuedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._bsProducts = new System.Windows.Forms.BindingSource(this.components);
-            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this._mainMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._gridProducts)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this._bsProducts)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // _mainMenu
@@ -65,7 +63,7 @@ namespace Nile.Windows
             this.AboutToolStripMenuItem});
             this._mainMenu.Location = new System.Drawing.Point(0, 0);
             this._mainMenu.Name = "_mainMenu";
-            this._mainMenu.Size = new System.Drawing.Size(1240, 35);
+            this._mainMenu.Size = new System.Drawing.Size(1240, 33);
             this._mainMenu.TabIndex = 0;
             this._mainMenu.Text = "menuStrip1";
             // 
@@ -81,7 +79,7 @@ namespace Nile.Windows
             // 
             this._miFileExit.Name = "_miFileExit";
             this._miFileExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this._miFileExit.Size = new System.Drawing.Size(270, 34);
+            this._miFileExit.Size = new System.Drawing.Size(206, 34);
             this._miFileExit.Text = "E&xit";
             this._miFileExit.Click += new System.EventHandler(this.OnFileExit);
             // 
@@ -100,29 +98,45 @@ namespace Nile.Windows
             // 
             this._miProductAdd.Name = "_miProductAdd";
             this._miProductAdd.ShortcutKeys = System.Windows.Forms.Keys.Insert;
-            this._miProductAdd.Size = new System.Drawing.Size(270, 34);
+            this._miProductAdd.Size = new System.Drawing.Size(202, 34);
             this._miProductAdd.Text = "&Add";
             this._miProductAdd.Click += new System.EventHandler(this.OnProductAdd);
             // 
             // _miProductEdit
             // 
             this._miProductEdit.Name = "_miProductEdit";
-            this._miProductEdit.Size = new System.Drawing.Size(270, 34);
+            this._miProductEdit.Size = new System.Drawing.Size(202, 34);
             this._miProductEdit.Text = "&Edit";
             this._miProductEdit.Click += new System.EventHandler(this.OnProductEdit);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(267, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(199, 6);
             // 
             // _miProductDelete
             // 
             this._miProductDelete.Name = "_miProductDelete";
             this._miProductDelete.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this._miProductDelete.Size = new System.Drawing.Size(270, 34);
+            this._miProductDelete.Size = new System.Drawing.Size(202, 34);
             this._miProductDelete.Text = "&Delete";
             this._miProductDelete.Click += new System.EventHandler(this.OnProductDelete);
+            // 
+            // AboutToolStripMenuItem
+            // 
+            this.AboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this._miAbout});
+            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
+            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
+            this.AboutToolStripMenuItem.Text = "&Help";
+            // 
+            // _miAbout
+            // 
+            this._miAbout.Name = "_miAbout";
+            this._miAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this._miAbout.Size = new System.Drawing.Size(195, 34);
+            this._miAbout.Text = "&About";
+            this._miAbout.Click += new System.EventHandler(this._miAbout_Click);
             // 
             // _gridProducts
             // 
@@ -141,7 +155,7 @@ namespace Nile.Windows
             this.idDataGridViewTextBoxColumn});
             this._gridProducts.DataSource = this._bsProducts;
             this._gridProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._gridProducts.Location = new System.Drawing.Point(0, 35);
+            this._gridProducts.Location = new System.Drawing.Point(0, 33);
             this._gridProducts.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this._gridProducts.Name = "_gridProducts";
             this._gridProducts.ReadOnly = true;
@@ -149,26 +163,10 @@ namespace Nile.Windows
             this._gridProducts.RowHeadersWidth = 62;
             this._gridProducts.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this._gridProducts.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this._gridProducts.Size = new System.Drawing.Size(1240, 547);
+            this._gridProducts.Size = new System.Drawing.Size(1240, 549);
             this._gridProducts.TabIndex = 1;
             this._gridProducts.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnEditRow);
             this._gridProducts.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDownGrid);
-            // 
-            // AboutToolStripMenuItem
-            // 
-            this.AboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._miAbout});
-            this.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem";
-            this.AboutToolStripMenuItem.Size = new System.Drawing.Size(65, 29);
-            this.AboutToolStripMenuItem.Text = "&Help";
-            // 
-            // _miAbout
-            // 
-            this._miAbout.Name = "_miAbout";
-            this._miAbout.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this._miAbout.Size = new System.Drawing.Size(270, 34);
-            this._miAbout.Text = "&About";
-            this._miAbout.Click += new System.EventHandler(this._miAbout_Click);
             // 
             // nameDataGridViewTextBoxColumn
             // 
@@ -230,10 +228,6 @@ namespace Nile.Windows
             this._bsProducts.AllowNew = false;
             this._bsProducts.DataSource = typeof(Nile.Product);
             // 
-            // errorProvider1
-            // 
-            this.errorProvider1.ContainerControl = this;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -250,7 +244,6 @@ namespace Nile.Windows
             this._mainMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this._gridProducts)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this._bsProducts)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -275,7 +268,6 @@ namespace Nile.Windows
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.ToolStripMenuItem AboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem _miAbout;
-        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
 

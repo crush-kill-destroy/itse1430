@@ -13,7 +13,7 @@ namespace Nile
     public class Product : IValidatableObject
     {
         /// <summary>Gets or sets the unique identifier.</summary>
-        public int Id { get; set; }
+        public int Id { get; set; } = 1;
 
         /// <summary>Gets or sets the name.</summary>
         /// <value>Never returns null.</value>

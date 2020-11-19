@@ -1,5 +1,7 @@
 /*
  * ITSE 1430
+ * Matthew Traywick
+ * Lab 04
  */
 using System;
 using System.Data.SqlClient;
@@ -47,10 +49,10 @@ namespace Nile.Windows
                 UpdateList();
             } catch (SqlException)
             {
-                throw new Exception("Database failure!");
+                ErrorMessage("Database failure!", "Add Failed!");
             } catch (Exception ex)
             {
-                ErrorMessage(ex.Message, "Add Failed!");
+                ErrorMessage(ex.Message, "Add failed!");
             }
         }
 
@@ -141,7 +143,7 @@ namespace Nile.Windows
                 UpdateList();
             } catch (SqlException)
             {
-                throw new Exception("Database failure!");
+                ErrorMessage("Database Failure", "Edit Failed!");
             } catch (Exception e)
             {
                 ErrorMessage(e.Message, "Edit Failed!");
@@ -164,13 +166,11 @@ namespace Nile.Windows
             } catch (SqlException)
             {
                 throw new Exception("Database failure!");
-            } catch (Exception e)
+            } catch
             {
-                ErrorMessage(e.Message, "Update Failed!");
+                ErrorMessage("Database Failure", "Update Failed!");
             }
         }
-
-        private readonly IProductDatabase _database = new Stores.Sql.SqlProductDatabase();
         #endregion
 
         private void _miAbout_Click ( object sender, EventArgs e )
@@ -184,6 +184,7 @@ namespace Nile.Windows
             MessageBox.Show(this, error, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        public static System.Configuration.ConnectionStringSettingsCollection ConnectionStrings { get; }
+        private static string s_connectionString = ConfigurationManager.ConnectionStrings["NileDbConnectionString"].ConnectionString;
+        private IProductDatabase _database = new Nile.Stores.Sql.SqlProductDatabase(s_connectionString);
     }
 }

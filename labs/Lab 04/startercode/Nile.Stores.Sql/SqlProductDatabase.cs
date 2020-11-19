@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * ITSE 1430
+ * Matthew Traywick
+ * Lab 04
+ */
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,7 +14,7 @@ namespace Nile.Stores.Sql
     public class SqlProductDatabase : IProductDatabase
     {
 
-        SqlProductDatabase (string connector)
+        public SqlProductDatabase (string connector)
         {
             _connector = connector;
         }
@@ -20,8 +25,9 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("AddProduct", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("AddProduct", connection) {
+                    CommandType = CommandType.StoredProcedure
+                };
 
                 command.Parameters.AddWithValue("@name", product.Name);
                 command.Parameters.AddWithValue("@price", product.Price);
@@ -40,8 +46,9 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("GetProduct", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("GetProduct", connection) {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@id", id);
 
                 using (var reader = command.ExecuteReader())
@@ -70,13 +77,15 @@ namespace Nile.Stores.Sql
 
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("GetAllProducts", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("GetAllProducts", connection) {
+                    CommandType = CommandType.StoredProcedure
+                };
 
                 using (var reader = command.ExecuteReader())
                 {
-                    var table = dataSet.Tables.Count > 0 ? dataSet.Tables[0] : null;
+                    var table = new DataTable();
                     table.Load(reader);
+
                     foreach (var row in table.Rows.OfType<DataRow>())
                         yield return new Product() {
                             Id = row.Field<int>("id"),
@@ -93,9 +102,9 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("Remove" +
-                    "Product", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("RemoveProduct", connection) {
+                    CommandType = CommandType.StoredProcedure
+                };
                 command.Parameters.AddWithValue("@id", id);
                 command.ExecuteNonQuery();
             };
@@ -105,22 +114,15 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("UpdateProduct", connection);
-                command.CommandType = CommandType.StoredProcedure;
+                var command = new SqlCommand("UpdateProduct", connection) {
+                    CommandType = CommandType.StoredProcedure
+                };
 
-                var paramName = new SqlParameter("@name", product.Name);
-                command.Parameters.Add(paramName);
-                var paramDescription = new SqlParameter("@description", product.Description);
-                command.Parameters.Add(paramDescription);
-                var paramPrice = new SqlParameter("@price", product.Price);
-                command.Parameters.Add(paramPrice);
-                var paramIsDiscontinued = new SqlParameter("@isdiscontinued", product.IsDiscontinued);
-                command.Parameters.Add(paramIsDiscontinued);
-
+                command.Parameters.AddWithValue("@id", product.Id);
                 command.Parameters.AddWithValue("@name", product.Name);
-                command.Parameters.AddWithValue("@price", product.Price);
-                command.Parameters.AddWithValue("@isdiscontinued", product.IsDiscontinued);
                 command.Parameters.AddWithValue("@description", product.Description);
+                command.Parameters.AddWithValue("@price", product.Price);
+                command.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
                 command.ExecuteNonQuery();
                 return product;
@@ -129,11 +131,9 @@ namespace Nile.Stores.Sql
 
         private SqlConnection OpenConnection ()
         {
-            using (var connector = new SqlConnection(_connector))
-            {
-                connector.Open();
-                return connector;
-            }
+            var connector = new SqlConnection(_connector);
+            connector.Open();
+            return connector;
         }
     }
 }
