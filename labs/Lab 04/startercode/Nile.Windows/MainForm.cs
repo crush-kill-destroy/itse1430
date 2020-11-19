@@ -7,6 +7,8 @@ using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Nile.Windows
 {
@@ -162,16 +164,17 @@ namespace Nile.Windows
         {
             try
             {
-                _bsProducts.DataSource = _database.GetAll();
+                var productList = _database.GetAll();
+                var alphabeticalList = productList.OrderBy(product => product.Name);
+                _bsProducts.DataSource = alphabeticalList;
             } catch (SqlException)
             {
-                throw new Exception("Database failure!");
-            } catch
+                ErrorMessage("Database Error!", "Update Failed!");
+            } catch (Exception ex)
             {
-                ErrorMessage("Database Failure", "Update Failed!");
+                ErrorMessage(ex.Message, "Update Failed!");
             }
         }
-        #endregion
 
         private void _miAbout_Click ( object sender, EventArgs e )
         {
@@ -186,5 +189,6 @@ namespace Nile.Windows
 
         private static string s_connectionString = ConfigurationManager.ConnectionStrings["NileDbConnectionString"].ConnectionString;
         private IProductDatabase _database = new Nile.Stores.Sql.SqlProductDatabase(s_connectionString);
+        #endregion
     }
 }
