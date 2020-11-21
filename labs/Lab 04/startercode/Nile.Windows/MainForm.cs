@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Configuration;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
 
 namespace Nile.Windows
 {
@@ -49,7 +50,7 @@ namespace Nile.Windows
                 //Save product
                 _database.Add(child.Product);
                 UpdateList();
-            } catch (SqlException)
+            } catch (DataException)
             {
                 ErrorMessage("Database failure!", "Add Failed!");
             } catch (Exception ex)
@@ -122,7 +123,7 @@ namespace Nile.Windows
                 //Delete product
                 _database.Remove(product.Id);
                 UpdateList();
-            } catch (SqlException)
+            } catch (DataException)
             {
                 ErrorMessage("Database failure!", "Deletion Failed!");
             } catch (Exception e)
@@ -143,7 +144,7 @@ namespace Nile.Windows
                 //Save product
                 _database.Update(child.Product);
                 UpdateList();
-            } catch (SqlException)
+            } catch (DataException)
             {
                 ErrorMessage("Database Failure", "Edit Failed!");
             } catch (Exception e)
@@ -167,7 +168,7 @@ namespace Nile.Windows
                 var productList = _database.GetAll();
                 var alphabeticalList = productList.OrderBy(product => product.Name);
                 _bsProducts.DataSource = alphabeticalList;
-            } catch (SqlException)
+            } catch (DataException)
             {
                 ErrorMessage("Database Error!", "Update Failed!");
             } catch (Exception ex)

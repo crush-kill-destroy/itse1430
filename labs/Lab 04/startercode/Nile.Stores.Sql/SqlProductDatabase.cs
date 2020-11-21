@@ -25,48 +25,59 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("AddProduct", connection) {
-                    CommandType = CommandType.StoredProcedure
-                };
+                try {
+                    var command = new SqlCommand("AddProduct", connection) {
+                        CommandType = CommandType.StoredProcedure
+                    };
 
-                command.Parameters.AddWithValue("@name", product.Name);
-                command.Parameters.AddWithValue("@price", product.Price);
-                command.Parameters.AddWithValue("@isdiscontinued", product.IsDiscontinued);
-                command.Parameters.AddWithValue("@description", product.Description);
-                
-                var dbId = command.ExecuteScalar();
-                var id = Convert.ToInt32(dbId);
+                    command.Parameters.AddWithValue("@name", product.Name);
+                    command.Parameters.AddWithValue("@price", product.Price);
+                    command.Parameters.AddWithValue("@isdiscontinued", product.IsDiscontinued);
+                    command.Parameters.AddWithValue("@description", product.Description);
 
-                product.Id = id;
-                return product;
-            };
+                    var dbId = command.ExecuteScalar();
+                    var id = Convert.ToInt32(dbId);
+
+                    product.Id = id;
+                    return product;
+                } catch (SqlException)
+                {
+                    throw new DataException();
+                }
+            }
         }
 
         public Product Get ( int id )
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("GetProduct", connection) {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@id", id);
-
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    while (reader.Read())
-                    {
-                        var dbId = reader.GetInt32(0);
-                        if (id == dbId)
-                            return new Product() {
-                                Id = id,
-                                Name = reader.GetString(1),
-                                Description = reader.GetString(2),
-                                Price = reader.GetInt32(3),
-                                IsDiscontinued = reader.GetBoolean(4)
-                            };
-                    }
+                    var command = new SqlCommand("GetProduct", connection) {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    command.Parameters.AddWithValue("@id", id);
 
-                    throw new ArgumentException(nameof(id), "Not found!");
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var dbId = reader.GetInt32(0);
+                            if (id == dbId)
+                                return new Product() {
+                                    Id = id,
+                                    Name = reader.GetString(1),
+                                    Description = reader.GetString(2),
+                                    Price = reader.GetInt32(3),
+                                    IsDiscontinued = reader.GetBoolean(4)
+                                };
+                        }
+
+                        throw new ArgumentException(nameof(id), "Not found!");
+                    }
+                } catch (SqlException)
+                {
+                    throw new DataException();
                 }
             }
         }
@@ -74,27 +85,32 @@ namespace Nile.Stores.Sql
         public IEnumerable<Product> GetAll ()
         {
             var dataSet = new DataSet();
+            var table = new DataTable();
 
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("GetAllProducts", connection) {
-                    CommandType = CommandType.StoredProcedure
-                };
-
-                using (var reader = command.ExecuteReader())
+                try
                 {
-                    var table = new DataTable();
-                    table.Load(reader);
+                    var command = new SqlCommand("GetAllProducts", connection) {
+                        CommandType = CommandType.StoredProcedure
+                    };
 
-                    foreach (var row in table.Rows.OfType<DataRow>())
-                        yield return new Product() {
-                            Id = row.Field<int>("id"),
-                            Name = row.Field<string>("name"),
-                            Description = row.Field<string>("description"),
-                            IsDiscontinued = row.Field<bool>("isdiscontinued"),
-                            Price = row.Field<decimal>("price"),
-                        };
+                    using (var reader = command.ExecuteReader())
+                    {
+                        table.Load(reader);
+                    }
+                } catch (SqlException)
+                {
+                    throw new DataException();
                 }
+                foreach (var row in table.Rows.OfType<DataRow>())
+                            yield return new Product() {
+                                Id = row.Field<int>("id"),
+                                Name = row.Field<string>("name"),
+                                Description = row.Field<string>("description"),
+                                IsDiscontinued = row.Field<bool>("isdiscontinued"),
+                                Price = row.Field<decimal>("price"),
+                            };
             }
         }
 
@@ -102,11 +118,17 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("RemoveProduct", connection) {
-                    CommandType = CommandType.StoredProcedure
-                };
-                command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
+                try
+                {
+                    var command = new SqlCommand("RemoveProduct", connection) {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    command.Parameters.AddWithValue("@id", id);
+                    command.ExecuteNonQuery();
+                } catch (SqlException)
+                {
+                    throw new DataException();
+                }
             };
         }
 
@@ -114,26 +136,38 @@ namespace Nile.Stores.Sql
         {
             using (var connection = OpenConnection())
             {
-                var command = new SqlCommand("UpdateProduct", connection) {
-                    CommandType = CommandType.StoredProcedure
-                };
+                try
+                {
+                    var command = new SqlCommand("UpdateProduct", connection) {
+                        CommandType = CommandType.StoredProcedure
+                    };
 
-                command.Parameters.AddWithValue("@id", product.Id);
-                command.Parameters.AddWithValue("@name", product.Name);
-                command.Parameters.AddWithValue("@description", product.Description);
-                command.Parameters.AddWithValue("@price", product.Price);
-                command.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
+                    command.Parameters.AddWithValue("@id", product.Id);
+                    command.Parameters.AddWithValue("@name", product.Name);
+                    command.Parameters.AddWithValue("@description", product.Description);
+                    command.Parameters.AddWithValue("@price", product.Price);
+                    command.Parameters.AddWithValue("@isDiscontinued", product.IsDiscontinued);
 
-                command.ExecuteNonQuery();
-                return product;
+                    command.ExecuteNonQuery();
+                    return product;
+                } catch (SqlException)
+                {
+                    throw new DataException();
+                }
             }
         }
 
         private SqlConnection OpenConnection ()
         {
-            var connector = new SqlConnection(_connector);
-            connector.Open();
-            return connector;
+            try
+            {
+                var connector = new SqlConnection(_connector);
+                connector.Open();
+                return connector;
+            } catch (SqlException)
+            {
+                throw new DataException();
+            }
         }
     }
 }
