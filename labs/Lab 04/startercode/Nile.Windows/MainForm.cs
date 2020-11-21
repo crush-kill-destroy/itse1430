@@ -134,8 +134,9 @@ namespace Nile.Windows
 
         private void EditProduct ( Product product )
         {
-            var child = new ProductDetailForm("Product Details");
-            child.Product = product;
+            var child = new ProductDetailForm("Product Details") {
+                Product = product
+            };
             if (child.ShowDialog(this) != DialogResult.OK)
                 return;
 
@@ -155,10 +156,7 @@ namespace Nile.Windows
 
         private Product GetSelectedProduct ()
         {
-            if (_gridProducts.SelectedRows.Count > 0)
-                return _gridProducts.SelectedRows[0].DataBoundItem as Product;
-
-            return null;
+            return _gridProducts.SelectedRows.Count > 0 ? _gridProducts.SelectedRows[0].DataBoundItem as Product : null;
         }
 
         private void UpdateList ()
@@ -188,8 +186,8 @@ namespace Nile.Windows
             MessageBox.Show(this, error, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
-        private static string s_connectionString = ConfigurationManager.ConnectionStrings["NileDbConnectionString"].ConnectionString;
-        private IProductDatabase _database = new Nile.Stores.Sql.SqlProductDatabase(s_connectionString);
+        private static readonly string s_connectionString = ConfigurationManager.ConnectionStrings["NileDbConnectionString"].ConnectionString;
+        private readonly IProductDatabase _database = new Nile.Stores.Sql.SqlProductDatabase(s_connectionString);
         #endregion
     }
 }

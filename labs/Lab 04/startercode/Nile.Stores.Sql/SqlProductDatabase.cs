@@ -84,7 +84,6 @@ namespace Nile.Stores.Sql
 
         public IEnumerable<Product> GetAll ()
         {
-            var dataSet = new DataSet();
             var table = new DataTable();
 
             using (var connection = OpenConnection())

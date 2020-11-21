@@ -70,12 +70,13 @@ namespace Nile.Stores
         
         private Product CopyProduct ( Product product )
         {
-            var newProduct = new Product();
-            newProduct.Id = product.Id;
-            newProduct.Name = product.Name;
-            newProduct.Description = product.Description;
-            newProduct.Price = product.Price;
-            newProduct.IsDiscontinued = product.IsDiscontinued;
+            var newProduct = new Product {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                IsDiscontinued = product.IsDiscontinued
+            };
 
             return newProduct;
         }
@@ -92,7 +93,7 @@ namespace Nile.Stores
             return null;
         }
 
-        private List<Product> _products = new List<Product>();
+        private readonly List<Product> _products = new List<Product>();
         private int _nextId = 1;
     }
 }
