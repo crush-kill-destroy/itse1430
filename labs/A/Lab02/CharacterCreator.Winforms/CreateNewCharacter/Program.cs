@@ -1,10 +1,16 @@
+/*
+ * ITSE 1430
+ * Matthew Traywick
+ * Lab 02
+ */
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Character_Creator.Winforms
+namespace CharacterCreator
 {
     static class Program
     {
@@ -17,7 +23,7 @@ namespace Character_Creator.Winforms
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new CharacterCreator());
+            Application.Run(new FormCreateCharacter());
         }
     }
 }

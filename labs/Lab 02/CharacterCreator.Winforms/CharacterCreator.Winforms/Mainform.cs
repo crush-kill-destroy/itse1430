@@ -32,8 +32,9 @@ namespace Character_Creator.Winforms
         private void OnNew ( object sender, EventArgs e)
         {
 
-            _character = new Character();
-            _character.ShowDialog(this);
+            var form = new CharacterCreator();
+            if (form.ShowDialog(this) == DialogResult.Cancel)
+                return;
         }
 
         private void OnExit(object sender, EventArgs e)

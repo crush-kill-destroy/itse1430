@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace Character_Creator.Winforms
 {
-    public partial class Character_Creator : Form
+    public partial class CharacterCreator : Form
     {
         private Label label1;
         private Label label2;
@@ -34,7 +34,7 @@ namespace Character_Creator.Winforms
         private TextBox _txtName;
         private RichTextBox _richDescriptionInput;
 
-        public Character_Creator ()
+        public CharacterCreator ()
         {
             InitializeComponent();
         }
