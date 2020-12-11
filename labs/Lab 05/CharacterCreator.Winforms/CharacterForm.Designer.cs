@@ -41,16 +41,16 @@
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this._txtBiography = new System.Windows.Forms.TextBox();
+            this._txtDescription = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this._btnCancel = new System.Windows.Forms.Button();
             this._btnSave = new System.Windows.Forms.Button();
             this._errors = new System.Windows.Forms.ErrorProvider(this.components);
-            this._txtStrength = new System.Windows.Forms.TextBox();
-            this._txtIntelligence = new System.Windows.Forms.TextBox();
-            this._txtAgility = new System.Windows.Forms.TextBox();
-            this._txtConstitution = new System.Windows.Forms.TextBox();
-            this._txtCharisma = new System.Windows.Forms.TextBox();
+            this._txtBrawn = new System.Windows.Forms.TextBox();
+            this._txtBrains = new System.Windows.Forms.TextBox();
+            this._txtLuck = new System.Windows.Forms.TextBox();
+            this._txtSanity = new System.Windows.Forms.TextBox();
+            this._txtMoxie = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._errors)).BeginInit();
             this.SuspendLayout();
@@ -120,11 +120,11 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this._txtCharisma);
-            this.groupBox1.Controls.Add(this._txtConstitution);
-            this.groupBox1.Controls.Add(this._txtAgility);
-            this.groupBox1.Controls.Add(this._txtIntelligence);
-            this.groupBox1.Controls.Add(this._txtStrength);
+            this.groupBox1.Controls.Add(this._txtMoxie);
+            this.groupBox1.Controls.Add(this._txtSanity);
+            this.groupBox1.Controls.Add(this._txtLuck);
+            this.groupBox1.Controls.Add(this._txtBrains);
+            this.groupBox1.Controls.Add(this._txtBrawn);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.label7);
@@ -191,13 +191,13 @@
             // 
             // _txtBiography
             // 
-            this._txtBiography.Location = new System.Drawing.Point(406, 60);
-            this._txtBiography.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this._txtBiography.Multiline = true;
-            this._txtBiography.Name = "_txtBiography";
-            this._txtBiography.Size = new System.Drawing.Size(440, 382);
-            this._txtBiography.TabIndex = 9;
-            this._txtBiography.TextChanged += new System.EventHandler(this._txtBiography_TextChanged);
+            this._txtDescription.Location = new System.Drawing.Point(406, 60);
+            this._txtDescription.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this._txtDescription.Multiline = true;
+            this._txtDescription.Name = "_txtBiography";
+            this._txtDescription.Size = new System.Drawing.Size(440, 382);
+            this._txtDescription.TabIndex = 9;
+            this._txtDescription.TextChanged += new System.EventHandler(this._txtBiography_TextChanged);
             // 
             // label4
             // 
@@ -238,48 +238,48 @@
             // 
             // _txtStrength
             // 
-            this._txtStrength.Location = new System.Drawing.Point(129, 32);
-            this._txtStrength.Name = "_txtStrength";
-            this._txtStrength.Size = new System.Drawing.Size(87, 26);
-            this._txtStrength.TabIndex = 4;
-            this._txtStrength.Text = "50";
-            this._txtStrength.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
+            this._txtBrawn.Location = new System.Drawing.Point(129, 32);
+            this._txtBrawn.Name = "_txtStrength";
+            this._txtBrawn.Size = new System.Drawing.Size(87, 26);
+            this._txtBrawn.TabIndex = 4;
+            this._txtBrawn.Text = "50";
+            this._txtBrawn.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
             // 
             // _txtIntelligence
             // 
-            this._txtIntelligence.Location = new System.Drawing.Point(129, 72);
-            this._txtIntelligence.Name = "_txtIntelligence";
-            this._txtIntelligence.Size = new System.Drawing.Size(87, 26);
-            this._txtIntelligence.TabIndex = 5;
-            this._txtIntelligence.Text = "50";
-            this._txtIntelligence.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
+            this._txtBrains.Location = new System.Drawing.Point(129, 72);
+            this._txtBrains.Name = "_txtIntelligence";
+            this._txtBrains.Size = new System.Drawing.Size(87, 26);
+            this._txtBrains.TabIndex = 5;
+            this._txtBrains.Text = "50";
+            this._txtBrains.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
             // 
             // _txtAgility
             // 
-            this._txtAgility.Location = new System.Drawing.Point(129, 115);
-            this._txtAgility.Name = "_txtAgility";
-            this._txtAgility.Size = new System.Drawing.Size(87, 26);
-            this._txtAgility.TabIndex = 6;
-            this._txtAgility.Text = "50";
-            this._txtAgility.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
+            this._txtLuck.Location = new System.Drawing.Point(129, 115);
+            this._txtLuck.Name = "_txtAgility";
+            this._txtLuck.Size = new System.Drawing.Size(87, 26);
+            this._txtLuck.TabIndex = 6;
+            this._txtLuck.Text = "50";
+            this._txtLuck.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
             // 
             // _txtConstitution
             // 
-            this._txtConstitution.Location = new System.Drawing.Point(129, 155);
-            this._txtConstitution.Name = "_txtConstitution";
-            this._txtConstitution.Size = new System.Drawing.Size(87, 26);
-            this._txtConstitution.TabIndex = 7;
-            this._txtConstitution.Text = "50";
-            this._txtConstitution.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
+            this._txtSanity.Location = new System.Drawing.Point(129, 155);
+            this._txtSanity.Name = "_txtConstitution";
+            this._txtSanity.Size = new System.Drawing.Size(87, 26);
+            this._txtSanity.TabIndex = 7;
+            this._txtSanity.Text = "50";
+            this._txtSanity.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
             // 
             // _txtCharisma
             // 
-            this._txtCharisma.Location = new System.Drawing.Point(127, 192);
-            this._txtCharisma.Name = "_txtCharisma";
-            this._txtCharisma.Size = new System.Drawing.Size(87, 26);
-            this._txtCharisma.TabIndex = 8;
-            this._txtCharisma.Text = "50";
-            this._txtCharisma.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
+            this._txtMoxie.Location = new System.Drawing.Point(127, 192);
+            this._txtMoxie.Name = "_txtCharisma";
+            this._txtMoxie.Size = new System.Drawing.Size(87, 26);
+            this._txtMoxie.TabIndex = 8;
+            this._txtMoxie.Text = "50";
+            this._txtMoxie.Validating += new System.ComponentModel.CancelEventHandler(this.OnValidatingStats);
             // 
             // CharacterForm
             // 
@@ -291,7 +291,7 @@
             this.Controls.Add(this._btnSave);
             this.Controls.Add(this._btnCancel);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this._txtBiography);
+            this.Controls.Add(this._txtDescription);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this._cbProfession);
             this.Controls.Add(this.label3);
@@ -331,15 +331,15 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox _txtBiography;
+        private System.Windows.Forms.TextBox _txtDescription;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button _btnCancel;
         private System.Windows.Forms.Button _btnSave;
         private System.Windows.Forms.ErrorProvider _errors;
-        private System.Windows.Forms.TextBox _txtCharisma;
-        private System.Windows.Forms.TextBox _txtConstitution;
-        private System.Windows.Forms.TextBox _txtAgility;
-        private System.Windows.Forms.TextBox _txtIntelligence;
-        private System.Windows.Forms.TextBox _txtStrength;
+        private System.Windows.Forms.TextBox _txtMoxie;
+        private System.Windows.Forms.TextBox _txtSanity;
+        private System.Windows.Forms.TextBox _txtLuck;
+        private System.Windows.Forms.TextBox _txtBrains;
+        private System.Windows.Forms.TextBox _txtBrawn;
     }
 }

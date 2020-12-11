@@ -77,23 +77,23 @@ namespace CharacterCreator.Winforms
         private void LoadCharacter ( Character character )
         {
             _txtName.Text = character.Name;
-            SelectProfession(character.Job);
-            SelectRace(character.Race);
-            _txtBiography.Text = character.Description;
-            _txtIntelligence.Text = character.Brains.ToString();
-            _txtStrength.Text = character.Brawn.ToString();
-            _txtAgility.Text = character.Luck.ToString();
-            _txtCharisma.Text = character.Moxie.ToString();
-            _txtConstitution.Text = character.Sanity.ToString();
+            _cbProfession.SelectedItem = character.Job;
+            _cbRace.SelectedItem = character.Race;
+            _txtDescription.Text = character.Description;
+            _txtBrawn.Text = character.Brawn.ToString();
+            _txtBrains.Text = character.Brains.ToString();
+            _txtLuck.Text = character.Luck.ToString();
+            _txtMoxie.Text = character.Moxie.ToString();
+            _txtSanity.Text = character.Sanity.ToString();
         }
 
         private Character SaveCharacter ( )
         {
-            var tempStrength = _txtStrength.Text;
-            var tempIntelligence = _txtIntelligence.Text;
-            var tempAgility = _txtAgility.Text;
-            var tempConstitution = _txtConstitution.Text;
-            var tempCharisma = _txtCharisma.Text;
+            var tempStrength = _txtBrawn.Text;
+            var tempIntelligence = _txtBrains.Text;
+            var tempAgility = _txtLuck.Text;
+            var tempConstitution = _txtSanity.Text;
+            var tempCharisma = _txtMoxie.Text;
 
             Int32.TryParse(tempStrength, out var intStrength);
             Int32.TryParse(tempIntelligence, out var intIntelligence);
@@ -103,9 +103,9 @@ namespace CharacterCreator.Winforms
 
             var character = new Character {
                 Name = _txtName.Text,
-                Job = _cbProfession.SelectedItem as Profession,
-                Race = _cbRace.SelectedItem as Race,
-                Description = _txtBiography.Text,
+                Job = _cbProfession.SelectedItem.ToString(),
+                Race = _cbRace.SelectedItem.ToString(),
+                Description = _txtDescription.Text,
                 Brawn = intStrength,
                 Brains = intIntelligence,
                 Luck = intAgility,

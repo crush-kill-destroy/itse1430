@@ -27,6 +27,8 @@ namespace CharacterCreator
         /// <summary>Turns errors into a list.</summary>
         public string GetValidationResults ( IEnumerable<ValidationResult> errors )
         {
+            if (!errors.Any())
+                return null;
             var builder = new StringBuilder();
             foreach (var error in errors)
                 builder.AppendLine(error.ToString());

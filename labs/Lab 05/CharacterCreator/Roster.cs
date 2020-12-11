@@ -17,42 +17,27 @@ namespace CharacterCreator
     {
         public Character Add ( Character character )
         {
+            character.Id = _characters.Count() + 1;
             var validation = new ObjectValidator();
             var validationResults = validation.TryValidateFullObject(character);
             var error = validation.GetValidationResults(validationResults);
             error += NameCheck(character.Name, character.Id);
 
             if (!String.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Addition Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
-            }
 
             character.Id = s_id++;
             _characters.Add(character);
+            SetID();
             return character;
         }
 
         /// <summary>Deletes a character</summary>
         public void Delete ( int id )
         {
-            var error = IdLessThanZero(id);
-            if (error == true)
-                return;
-
             var character = IdMatch(id);
             _characters.Remove(character);
-        }
-
-        private bool IdLessThanZero (int id)
-        {
-            if (id <= 0)
-            {
-                MessageBox.Show("ID is out of range!", "Delete Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return true;
-            }
-
-            return false;
+            SetID();
         }
 
         /// <summary>Edits a character</summary>
@@ -89,12 +74,10 @@ namespace CharacterCreator
             }
 
             if (!String.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Update Failed!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }
 
             CloneCharacter(update, original);
+            SetID();
         }
 
         /// <summary>Returns characters by their ID</summary>
@@ -143,6 +126,12 @@ namespace CharacterCreator
                     return "You're already using that name!";
 
             return null;
+        }
+
+        void SetID ()
+        {
+            for (int i = 1; i <= _characters.Count(); i++)
+                _characters[i - 1].Id = i;
         }
 
         private static int s_id = 1;

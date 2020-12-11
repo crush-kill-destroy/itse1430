@@ -8,85 +8,69 @@ namespace CharacterCreator.web.Models
 {
     public class CharacterModel : IValidatableObject
     {
-        /// <summary>Gets the maximum attribute value.</summary>
-        public const int MaximumAttributeValue = 100;
-
-        /// <summary>Gets the minimum attribute value.</summary>
-        public const int MinimumAttributeValue = 1;
-
-        /// <summary> A unique identifier for the character. </summary>
-        public int Id { get; set; }
-
-        /// <summary>Gets or sets the name.</summary>
-        public string Name
+        public CharacterModel ()
+        { }
+        public CharacterModel (Character character)
         {
-            get { return _name ?? ""; }
-            set { _name = value; }
+            Id = character.Id;
+            Name = character.Name;
+            Race = character.Race;
+            Job = character.Job;
+            Description = character.Description;
+            Brawn = character.Brawn;
+            Brains = character.Brains;
+            Luck = character.Luck;
+            Sanity = character.Sanity;
+            Moxie = character.Moxie;
         }
 
-        /// <summary>Gets or sets the biography.</summary>
-        public string Biography
+        [Required(AllowEmptyStrings = false)]
+        [StringLength(30)]
+        public string Name { get; set; }
+        [StringLength(500)]
+        public string Description { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public string Job { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public string Race { get; set; }
+        public int Id { get; set; } = 1;
+        [Range(1, 100)]
+        public int Brawn { get; set; } = 50;
+        [Range(1, 100)]
+        public int Brains { get; set; } = 50;
+        [Range(1, 100)]
+        public int Luck { get; set; } = 50;
+        [Range(1, 100)]
+        public int Sanity { get; set; } = 50;
+        [Range(1, 100)]
+        public int Moxie { get; set; } = 50;
+        public bool uniqueName = true;
+        public bool uniqueId = true;
+
+        
+
+        public Character Convert()
         {
-            get { return _bio ?? ""; }
-            set { _bio = value; }
+            return new Character {
+                Id = Id,
+                Name = Name,
+                Brawn = Brawn,
+                Brains = Brains,
+                Luck = Luck,
+                Sanity = Sanity,
+                Moxie = Moxie,
+                Job = Job,
+                Race = Race,
+                Description = Description,
+            };
         }
 
-        /// <summary>Gets or sets the profession.</summary>
-        public Profession Profession { get; set; }
-
-        /// <summary>Gets or sets the race.</summary>
-        public Race Race { get; set; }
-
-        /// <summary>Gets or sets the strength.</summary>
-        public int Strength { get; set; }
-
-        /// <summary>Gets or sets the intelligence.</summary>
-        public int Intelligence { get; set; }
-
-        /// <summary>Gets or sets the agility.</summary>
-        public int Agility { get; set; }
-
-        /// <summary>Gets or sets the constitution.</summary>
-        public int Constitution { get; set; }
-
-        /// <summary>Gets or sets the charisma.</summary>
-        public int Charisma { get; set; }
-
-        private bool ValidateAttribute ( int value )
-        {
-            return (value >= MinimumAttributeValue) && (value <= MaximumAttributeValue);
-        }
-
-        /// <summary>Represents the name and bio, respectively.</summary>
-        private string _name, _bio;
-
-        /// <summary>Validates the results</summary>
         public IEnumerable<ValidationResult> Validate ( ValidationContext validationContext )
         {
-            if (String.IsNullOrEmpty(Name))
-                yield return new ValidationResult("Name is required", new[] { nameof(Name) });
-
-            if (Profession == null)
-                yield return new ValidationResult("Profession is required", new[] { nameof(Profession) });
-
-            if (Race == null)
-                yield return new ValidationResult("Race is required", new[] { nameof(Race) });
-
-            if (!ValidateAttribute(Strength))
-                yield return new ValidationResult($"Strength must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Strength) });
-            if (!ValidateAttribute(Intelligence))
-                yield return new ValidationResult($"Intelligence must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Intelligence) });
-            if (!ValidateAttribute(Agility))
-                yield return new ValidationResult($"Agility must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Agility) });
-            if (!ValidateAttribute(Constitution))
-                yield return new ValidationResult($"Constitution must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Constitution) });
-            if (!ValidateAttribute(Charisma))
-                yield return new ValidationResult($"Charisma must be between {MinimumAttributeValue} and {MaximumAttributeValue}", new[] { nameof(Charisma) });
-        }
-
-        public override string ToString ()
-        {
-            return Name;
+            if (!uniqueName)
+                yield return new ValidationResult("Names must be unique!", new[] { nameof(Name) });
+            if (!uniqueId)
+                yield return new ValidationResult("IDs must be unique!", new[] { nameof(Id) });
         }
     }
 }
