@@ -3,6 +3,7 @@
  * Matthew Traywick
  * Lab 05
  */
+
 using System.Collections.Generic;
 
 namespace CharacterCreator

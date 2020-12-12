@@ -128,7 +128,7 @@ namespace CharacterCreator
 
         private void SetID ()
         {
-            for (int i = 1; i <= _characters.Count(); i++)
+            for (var i = 1; i <= _characters.Count(); i++)
                 _characters[i - 1].Id = i;
         }
 

@@ -50,8 +50,6 @@
     <Compile Include="Roster.cs" />
     <Compile Include="ICharacterRoster.cs" />
     <Compile Include="Object Validator.cs" />
-    <Compile Include="Race.cs" />
-    <Compile Include="Profession.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
