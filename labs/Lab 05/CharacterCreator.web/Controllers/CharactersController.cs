@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+ * ITSE 1430
+ * Matthew Traywick
+ * Lab 05
+ */
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -69,6 +74,9 @@ namespace CharacterCreator.web.Controllers
         [HttpPost]
         public ActionResult Edit ( CharacterModel character )
         {
+            character.uniqueName = IdNameCheck(character);
+            ObjectValidator.TryValidateFullObject(character).ForEach(x => ModelState.AddModelError("", x.ErrorMessage));
+
             if (ModelState.IsValid)
             {
                 try
@@ -113,7 +121,6 @@ namespace CharacterCreator.web.Controllers
                 if (name == check)
                     return false;
             return true;
-
         }
 
     private bool IdNameCheck ( CharacterModel character )

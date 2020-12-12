@@ -1,7 +1,7 @@
 ﻿/*
  * ITSE 1430
  * Matthew Traywick
- * Lab 03
+ * Lab 05
  */
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using CharacterCreator.Professions;
 
 namespace CharacterCreator.Winforms
 {
@@ -51,8 +50,6 @@ namespace CharacterCreator.Winforms
 
         private void LoadUI ()
         {
-            LoadProfessions();
-            LoadRaces();
 
             if (SelectedCharacter != null)
             {
@@ -61,15 +58,8 @@ namespace CharacterCreator.Winforms
             };
         }
 
-        private void LoadProfessions ()
-        {
-            _cbProfession.DataSource = StandardProfessions.Professions;
-            _cbProfession.SelectedIndex = -1;
-        }
-
         private void LoadRaces ()
         {
-            _cbRace.DataSource = StandardRaces.Races;
             _cbRace.SelectedIndex = -1;
         }
 

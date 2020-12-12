@@ -1,7 +1,7 @@
 ﻿/*
  * ITSE 1430
  * Matthew Traywick
- * Lab 03
+ * Lab 05
  */
 using System;
 using System.ComponentModel.DataAnnotations;
