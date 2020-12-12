@@ -18,9 +18,8 @@ namespace CharacterCreator
         public Character Add ( Character character )
         {
             character.Id = _characters.Count() + 1;
-            var validation = new ObjectValidator();
-            var validationResults = validation.TryValidateFullObject(character);
-            var error = validation.GetValidationResults(validationResults);
+            var validationResults = ObjectValidator.TryValidateFullObject(character);
+            var error = ObjectValidator.GetValidationResults(validationResults);
             error += NameCheck(character.Name, character.Id);
 
             if (!String.IsNullOrEmpty(error))
@@ -59,9 +58,8 @@ namespace CharacterCreator
         /// <param name="update">The character you are updating it with.</param>
         public void Update ( int id, Character update )
         {
-            var validation = new ObjectValidator();
-            var validationResults = validation.TryValidateFullObject(update);
-            var error = validation.GetValidationResults(validationResults);
+            var validationResults = ObjectValidator.TryValidateFullObject(update);
+            var error = ObjectValidator.GetValidationResults(validationResults);
             error += NameCheck(update.Name, update.Id);
             var original = IdMatch(id);
 
@@ -69,8 +67,8 @@ namespace CharacterCreator
                 error += "Character not found!";
             else
             {
-                validationResults = validation.TryValidateFullObject(original);
-                error += validation.GetValidationResults(validationResults);
+                validationResults = ObjectValidator.TryValidateFullObject(original);
+                error += ObjectValidator.GetValidationResults(validationResults);
             }
 
             if (!String.IsNullOrEmpty(error))
@@ -128,7 +126,7 @@ namespace CharacterCreator
             return null;
         }
 
-        void SetID ()
+        private void SetID ()
         {
             for (int i = 1; i <= _characters.Count(); i++)
                 _characters[i - 1].Id = i;

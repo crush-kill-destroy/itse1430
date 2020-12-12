@@ -45,7 +45,6 @@ namespace CharacterCreator.web.Models
         [Range(1, 100)]
         public int Moxie { get; set; } = 50;
         public bool uniqueName = true;
-        public bool uniqueId = true;
 
         
 
@@ -69,8 +68,6 @@ namespace CharacterCreator.web.Models
         {
             if (!uniqueName)
                 yield return new ValidationResult("Names must be unique!", new[] { nameof(Name) });
-            if (!uniqueId)
-                yield return new ValidationResult("IDs must be unique!", new[] { nameof(Id) });
         }
     }
 }

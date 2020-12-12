@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using CharacterCreator.web.Models;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.Ajax.Utilities;
 
 namespace CharacterCreator.web.Controllers
 {
     public class CharactersController : Controller
     {
-        static Roster s_characters = new Roster();
+        static private Roster s_characters = new Roster();
         public ActionResult Index()
         {
             var characters = s_characters.GetAll()
@@ -34,13 +36,16 @@ namespace CharacterCreator.web.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add ( CharacterModel model )
+        public ActionResult Add ( CharacterModel character )
         {
+            character.uniqueName = NameCheck(character.Name);
+            ObjectValidator.TryValidateFullObject(character).ForEach(x => ModelState.AddModelError("", x.ErrorMessage));
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    var character = s_characters.Add(model.Convert());
+                    character.Id = s_characters.Add(character.Convert()).Id;
                     return RedirectToAction(nameof(CharacterSheet), new { id = character.Id });
                 } catch (Exception e)
                 {
@@ -48,10 +53,10 @@ namespace CharacterCreator.web.Controllers
                 };
             };
 
-            return View(model);
+            return View(character);
         }
 
-
+        
         public ActionResult Edit(int id)
         {
             var character = s_characters.Get(id);
@@ -102,7 +107,24 @@ namespace CharacterCreator.web.Controllers
             return View(character);
         }
 
+        private bool NameCheck ( string name)
+        {
+            foreach(var check in s_characters.GetAll().Select( x => x.Name))
+                if (name == check)
+                    return false;
+            return true;
 
+        }
+
+    private bool IdNameCheck ( CharacterModel character )
+        {
+            var characters = s_characters.GetAll();
+            if (characters.Any())
+                foreach (var test in characters)
+                    if (character.Name == test.Name && test.Id != character.Id)
+                        return false;
+            return true;
+        }
 
     }
 }

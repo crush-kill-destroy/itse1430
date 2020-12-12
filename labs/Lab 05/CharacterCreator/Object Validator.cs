@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 namespace CharacterCreator
 {
     /// <summary>This class just helps make validating objects easier.</summary>
-    public class ObjectValidator
+    public static class ObjectValidator
     {
         /// <summary>Automates validating objects.</summary>
-        public IEnumerable<ValidationResult> TryValidateFullObject ( IValidatableObject value )
+        public static IEnumerable<ValidationResult> TryValidateFullObject ( IValidatableObject value )
         {
             var validationResults = new List<ValidationResult>();
             Validator.TryValidateObject(value, new ValidationContext(value), validationResults, true);
@@ -25,7 +25,7 @@ namespace CharacterCreator
         }
 
         /// <summary>Turns errors into a list.</summary>
-        public string GetValidationResults ( IEnumerable<ValidationResult> errors )
+        public static string GetValidationResults ( IEnumerable<ValidationResult> errors )
         {
             if (!errors.Any())
                 return null;

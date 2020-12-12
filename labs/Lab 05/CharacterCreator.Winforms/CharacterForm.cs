@@ -34,12 +34,11 @@ namespace CharacterCreator.Winforms
         {
             var character = SaveCharacter();
 
-            var validator = new ObjectValidator();
-            var validationResults = validator.TryValidateFullObject(character);
+            var validationResults = ObjectValidator.TryValidateFullObject(character);
 
             if (validationResults.Count() > 0)
             {
-                var errors = validator.GetValidationResults(validationResults);
+                var errors = ObjectValidator.GetValidationResults(validationResults);
                 MessageBox.Show(this, errors, "Save Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 DialogResult = DialogResult.None;
                 return;
